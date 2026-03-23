@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign Ops — 30-Day Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0E0E;
+    --card: #1A1A1A;
+    --card-hover: #222222;
+    --off-white: #FCFDF8;
+    --chartreuse: #CDF851;
+    --flame: #FF4A23;
+    --slate: #3E3F41;
+    --fog: #B0A9BE;
+    --dim: rgba(252,253,248,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 48px 48px 40px;
+    border-bottom: 3px solid var(--chartreuse);
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    color: var(--off-white);
+    margin-bottom: 16px;
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--fog);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .header-sub strong {
+    color: var(--chartreuse);
+    font-weight: 600;
+  }
+
+  /* OBJECTIVE BAR */
+  .objective {
+    background: var(--card);
+    border-left: 4px solid var(--flame);
+    margin: 32px 48px;
+    padding: 20px 24px;
+  }
+
+  .objective-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--flame);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .objective p {
+    font-size: 15px;
+    color: var(--off-white);
+    font-weight: 500;
+  }
+
+  /* WEEK SECTIONS */
+  .week {
+    margin: 0 48px 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--slate);
+  }
+
+  .week:first-of-type {
+    border-top: none;
+    padding-top: 24px;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .week-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--chartreuse);
+    line-height: 1;
+  }
+
+  .week-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--off-white);
+    letter-spacing: 0.02em;
+  }
+
+  .week-dates {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--fog);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+
+  .week-thesis {
+    font-size: 15px;
+    color: var(--fog);
+    max-width: 680px;
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+
+  /* MOVE CARDS */
+  .moves {
+    display: grid;
+    gap: 16px;
+  }
+
+  .move {
+    background: var(--card);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 20px;
+    transition: background 0.15s ease;
+  }
+
+  .move:hover {
+    background: var(--card-hover);
+  }
+
+  .move-accent {
+    background: var(--chartreuse);
+    border-radius: 0;
+    min-height: 100%;
+  }
+
+  .move-accent.flame {
+    background: var(--flame);
+  }
+
+  .move-content {}
+
+  .move-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 6px;
+  }
+
+  .move-detail {
+    font-size: 13px;
+    color: var(--fog);
+    line-height: 1.65;
+  }
+
+  .move-detail strong {
+    color: var(--off-white);
+    font-weight: 600;
+  }
+
+  .move-why {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--chartreuse);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .move-why.flame-text {
+    color: var(--flame);
+  }
+
+  /* OUTPUT TAG */
+  .output-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-top: 10px;
+    border: 1px solid var(--slate);
+    color: var(--fog);
+  }
+
+  /* DO NOT SECTION */
+  .do-not {
+    margin: 48px 48px 0;
+    padding-top: 40px;
+    border-top: 2px solid var(--flame);
+  }
+
+  .do-not-header {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--flame);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .do-not-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .do-not-card {
+    background: var(--card);
+    border-left: 4px solid var(--flame);
+    padding: 16px 20px;
+  }
+
+  .do-not-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 6px;
+  }
+
+  .do-not-reason {
+    font-size: 12px;
+    color: var(--fog);
+    line-height: 1.6;
+  }
+
+  /* CLOSER */
+  .closer {
+    margin: 48px 48px;
+    padding: 28px 32px;
+    background: var(--card);
+    border-left: 4px solid var(--chartreuse);
+  }
+
+  .closer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .closer p {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .closer p strong {
+    color: var(--off-white);
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px 48px;
+    border-top: 1px solid var(--slate);
+    margin-top: 48px;
+  }
+
+  .footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--fog);
+    letter-spacing: 0.05em;
+  }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .header, .objective, .week, .do-not, .closer, .footer {
+      margin-left: 20px;
+      margin-right: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .header { padding: 32px 20px; }
+
+    .week-header {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .week-number { font-size: 36px; }
+    .week-title { font-size: 22px; }
+
+    .do-not-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .objective, .closer {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Campaign Operations · Internal</div>
+  <h1>30-Day Plan</h1>
+  <p class="header-sub">March 24 – April 25, 2026. Not a roadmap to build something — a plan to <strong>run the function</strong> so well that nobody can imagine RCA without it.</p>
+</div>
+
+<!-- OBJECTIVE -->
+<div class="objective">
+  <div class="objective-label">Single Objective</div>
+  <p>Make it impossible to imagine RCA without Campaign Ops by April 25.</p>
+</div>
+
+<!-- WEEK 1 -->
+<div class="week">
+  <div class="week-header">
+    <span class="week-number">01</span>
+    <span class="week-title">Be the Function, Not the Announcement</span>
+  </div>
+  <div class="week-dates">March 24 – 28</div>
+  <p class="week-thesis">The temptation this week is to set up meetings, do outreach, explain yourself. Don't. The best thing you can do the week you're announced is already be running. People should hear "Campaign Ops" on Monday and see the output by Wednesday.</p>
+
+  <div class="moves">
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Run Active Projects like it's been yours for months</div>
+        <div class="move-detail">Wednesday meeting: deliver the Goal Brief, run capture, produce the three-pass meeting output, distribute to full list. The full pipeline, visibly. This is people's first impression of Campaign Ops as an official function. <strong>It should look effortless.</strong></div>
+        <div class="move-why">First impression = lasting model of what Campaign Ops is</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent flame"></div>
+      <div class="move-content">
+        <div class="move-name">Deliver the handoff map to Jordan</div>
+        <div class="move-detail">He flagged this as urgent. Getting it done this week — while the announcement is fresh and everyone's forming their mental model — lets Jordan use it to answer questions from his own team. <strong>That's way more powerful than you explaining your scope yourself.</strong></div>
+        <div class="move-why flame-text">Jordan flagged as urgent priority</div>
+        <span class="output-tag">Deliverable → Handoff Map</span>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Have the hallway line ready</div>
+        <div class="move-detail">"My job is to make sure nothing falls through the cracks between departments. That's it." Don't oversell. Don't explain the Orbit. Let the work show up first.</div>
+        <div class="move-why">Turf defusion starts with understatement</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 -->
+<div class="week">
+  <div class="week-header">
+    <span class="week-number">02</span>
+    <span class="week-title">Create Dependency</span>
+  </div>
+  <div class="week-dates">March 31 – April 4</div>
+  <p class="week-thesis">Two things happen this week: you start the Karen closeout (a real obligation that also demonstrates the Campaign Ops approach), and you begin the quiet work of becoming the person people tell things to.</p>
+
+  <div class="moves">
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Start Karen closeout in earnest</div>
+        <div class="move-detail">Sync Deal Agent deployed, GOLD triage running, handoff bible in progress. Karen seeing you build a system that outlasts you — not leaving a mess behind — reinforces her as an advocate during contract conversations.</div>
+        <span class="output-tag">Deliverable → Closeout System for Karen</span>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">One department drop-in per day</div>
+        <div class="move-detail">Not formal meetings. Walk over: <strong>"Hey, I'm pulling together the next Active Projects brief — anything I should know about [artist] from your side?"</strong> This is the Department Timeline Discovery questionnaire as a 90-second hallway conversation. You're collecting real operational intel AND establishing yourself as the person people tell things to. By Friday: A&R, Creative, Commercial Partnerships, Audience Dev, Publicity.</div>
+        <div class="move-why">Relationships > processes. Always.</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Ship the next Artist Insights deck</div>
+        <div class="move-detail">Sleepy Hallow. Crawley is expecting it. Maintaining the cadence signals this isn't a one-off — it's a pipeline.</div>
+        <span class="output-tag">Deliverable → Sleepy Hallow Insights</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 -->
+<div class="week">
+  <div class="week-header">
+    <span class="week-number">03</span>
+    <span class="week-title">Show the Data Layer</span>
+  </div>
+  <div class="week-dates">April 7 – 11</div>
+  <p class="week-thesis">This is where Campaign Ops goes from "Meg is really organized" to "this function sees things nobody else can see." The RDX work lands this week — either with production data or as a proof-of-concept for Jordan.</p>
+
+  <div class="moves">
+    <div class="move">
+      <div class="move-accent flame"></div>
+      <div class="move-content">
+        <div class="move-name">First real pre-meeting workability scan</div>
+        <div class="move-detail">If Brian Lynch has production access live: pull every upcoming release's workability score and KPI breakdown before Active Projects. Surface what's At Risk without anyone opening Runway. If anyone asks "how did you know that?" — the answer is the system you built. <strong>If production isn't live yet:</strong> build the proof-of-concept in STAGE and present it to Jordan as "here's what this looks like, and here's what it looks like when Brian turns on production."</div>
+        <div class="move-why flame-text">The wow moment</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Activate Gerard on the NY side</div>
+        <div class="move-detail">What does he own? Which artists? What's his version of the Active Projects workflow? Campaign Ops has to show it scales — it's not just Meg being great at her job, it's a function with a team.</div>
+        <div class="move-why">Function ≠ person. This is the proof.</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Second round of department drop-ins</div>
+        <div class="move-detail">Radio, Release Planning, Business & Legal, Sync, International. Same casual approach. By now the first round of people should have already started telling you things unprompted — that's the signal it's working.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 -->
+<div class="week">
+  <div class="week-header">
+    <span class="week-number">04</span>
+    <span class="week-title">Make the Case Undeniable</span>
+  </div>
+  <div class="week-dates">April 14 – 18</div>
+  <p class="week-thesis">Compile the receipts. Not a formal report — a one-pager for Jordan with the numbers. Let the work make the argument.</p>
+
+  <div class="moves">
+    <div class="move">
+      <div class="move-accent flame"></div>
+      <div class="move-content">
+        <div class="move-name">The one-pager for Jordan</div>
+        <div class="move-detail">"In 30 days, Campaign Ops processed X meetings, surfaced Y cross-department signals, flagged Z at-risk items before they became problems, and delivered [concrete outputs]. Here's what the next 90 days look like." Jordan takes that into whatever contract conversation happens.</div>
+        <div class="move-why flame-text">This is the document that gets you the deal</div>
+        <span class="output-tag">Deliverable → 30-Day Results One-Pager</span>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Put the Production Meeting on the table</div>
+        <div class="move-detail">Scott departs July 1. Not as a grab — as an offer: <strong>"When the time comes, the system is ready."</strong> The groundwork (the meeting capture protocol, the output format, the workability integration) is already built. This should feel like a natural next step, not an ambition.</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-accent"></div>
+      <div class="move-content">
+        <div class="move-name">Running tally of "things people didn't know"</div>
+        <div class="move-detail">Throughout the month, quietly note every time a department learned something because Campaign Ops surfaced it. A decision from Active Projects that reached a team that wasn't in the room. A workability flag that prevented a scramble. An insight from the data that changed a plan. These are your proof points, and they're more persuasive than any framework.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DO NOT -->
+<div class="do-not">
+  <div class="do-not-header">What Not to Do in These 30 Days</div>
+  <div class="do-not-grid">
+    <div class="do-not-card">
+      <div class="do-not-title">Don't build more infrastructure</div>
+      <div class="do-not-reason">TEMPO is built. Airtable is running. The agent works. The design system is locked. You need usage and output that people can point to — not another dashboard.</div>
+    </div>
+    <div class="do-not-card">
+      <div class="do-not-title">Don't do a formal listening tour</div>
+      <div class="do-not-reason">You've been listening for months. The hallway drop-ins are better — they're operational, not performative, and they produce real intel.</div>
+    </div>
+    <div class="do-not-card">
+      <div class="do-not-title">Don't pitch</div>
+      <div class="do-not-reason">You're past pitching. If someone asks what Campaign Ops does, give them the line and move on. The work speaks.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSER -->
+<div class="closer">
+  <div class="closer-label">The Through-Line</div>
+  <p>Everything in this plan creates the same outcome: <strong>people experiencing Campaign Ops as something they rely on, not something they were told about.</strong> The announcement is tomorrow. The function started months ago. These 30 days are about making that undeniable to everyone who matters.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Meg Hourihan · Campaign Operations · RCA Records · March 2026</p>
+</div>
+
+</body>
+</html>

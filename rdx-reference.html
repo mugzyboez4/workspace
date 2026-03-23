@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDX Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0F0E0E; --card:#1A1A1A; --off-white:#FCFDF8; --chartreuse:#CDF851; --flame:#FF4A23; --slate:#3E3F41; --fog:#B0A9BE; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--off-white); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+.page { max-width:860px; margin:0 auto; padding:48px; }
+.back { font-family:'DM Mono',monospace; font-size:11px; color:var(--fog); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; }
+.back:hover { color:var(--chartreuse); }
+h1 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.02em; margin:24px 0 8px; border-bottom:3px solid var(--chartreuse); padding-bottom:12px; }
+h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--off-white); margin:32px 0 12px; padding-top:16px; border-top:1px solid var(--slate); }
+h3 { font-size:15px; font-weight:700; color:var(--chartreuse); margin:20px 0 8px; }
+p { font-size:13px; color:var(--fog); line-height:1.7; margin-bottom:4px; }
+p strong { color:var(--off-white); }
+p em { color:var(--chartreuse); font-style:normal; }
+hr { border:none; border-top:1px solid var(--slate); margin:24px 0; }
+br { display:block; content:""; margin:4px 0; }
+.bullet { font-size:13px; color:var(--fog); line-height:1.7; padding-left:16px; margin-bottom:2px; }
+.bullet strong { color:var(--off-white); }
+blockquote { background:var(--card); border-left:3px solid var(--flame); padding:12px 16px; margin:12px 0; font-size:13px; color:var(--fog); }
+pre { background:var(--card); padding:16px; margin:12px 0; overflow-x:auto; border-left:3px solid var(--chartreuse); }
+code { font-family:'DM Mono',monospace; font-size:12px; color:var(--chartreuse); }
+code.inline { background:var(--card); padding:2px 6px; font-size:12px; }
+.table-wrap { overflow-x:auto; margin:12px 0; }
+table { border-collapse:collapse; width:100%; font-size:12px; }
+th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--fog); text-align:left; padding:8px 10px; border-bottom:2px solid var(--slate); background:var(--card); }
+td { padding:8px 10px; border-bottom:1px solid #1A1A1A; color:var(--fog); }
+td strong { color:var(--off-white); }
+.footer { padding-top:24px; border-top:1px solid var(--slate); margin-top:48px; }
+.footer p { font-family:'DM Mono',monospace; font-size:10px; color:var(--slate); }
+@media (max-width:640px) { .page { padding:24px 20px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<a href="index.html" class="back">← Workspace</a>
+<h1>RDX Reference Guide — Campaign Ops</h1>
+<br>
+<p><strong>Last updated:</strong> March 21, 2026</p>
+<p><strong>Environment:</strong> rdx-federation-stage.smecloudops.com/playground/</p>
+<p><strong>Wiki:</strong> wiki.smedigitalapps.com/wiki/spaces/RDX</p>
+<p><strong>RCA Finance Label Key:</strong> E009 (confirmed via <code class="inline">finLabelT3Parents</code> query)</p>
+<br>
+<hr>
+<br>
+<h2>What RDX Is</h2>
+<br>
+<p>Sony's Real-Time Data Exchange (RDX) is a GraphQL federation platform that connects all SME backend applications. It's live, it's accessible, and nobody at RCA is using it operationally. Campaign Ops discovered and confirmed access on March 20, 2026.</p>
+<br>
+<p><strong>Core pitch:</strong> "Sony built the pipes (RDX). Nobody at the label reads the water. Campaign Ops is the human translation layer."</p>
+<br>
+<hr>
+<br>
+<h2>GraphQL Connection Pattern</h2>
+<br>
+<p>Every collection in RDX uses the Connection type pattern. This means <strong>every</strong> collection field requires a <code class="inline">nodes { }</code> wrapper — at every nesting level simultaneously.</p>
+<br>
+<pre><code class="lang-graphql">
+# WRONG
+mktTimeline(fromDate: "2026-04-01", toDate: "2026-04-30") {
+  mktProducts { title }
+}
+
+# CORRECT
+mktTimeline(fromDate: "2026-04-01", toDate: "2026-04-30") {
+  nodes {
+    mktProducts {
+      nodes {
+        title
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<p>This applies to: <code class="inline">mktProducts</code>, <code class="inline">kpis</code>, <code class="inline">partnerInfo</code>, <code class="inline">mktDistChannels</code>, <code class="inline">mktPartners</code>, and all other collection fields.</p>
+<br>
+<hr>
+<br>
+<h2>Confirmed Working Queries (STAGE)</h2>
+<br>
+<h3>1. Release Runway Mega-Query</h3>
+<br>
+<p>Returns the full operational picture for any release in a date range.</p>
+<br>
+<pre><code class="lang-graphql">
+{
+  mktTimeline(fromDate: "2026-04-01", toDate: "2026-04-30") {
+    nodes {
+      mktProducts {
+        nodes {
+          title
+          artistName
+          streetDate
+          workability {
+            score
+            kpis {
+              nodes {
+                name
+                status
+                weighting
+                isManual
+                configType
+              }
+            }
+          }
+          partnerInfo {
+            nodes {
+              partnerName
+              leadTime
+              pitchDate
+              pitchStatus
+              pitchCopy
+              weekOneStream
+            }
+          }
+          mktDistChannels {
+            nodes {
+              title
+              isActive
+            }
+          }
+          alerts {
+            alertType
+            daysUntilRelease
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>2. Workability KPI System</h3>
+<br>
+<p><strong>9 confirmed KPIs:</strong></p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>KPI</th><th>Auto/Manual</th><th>Config Type</th></tr>
+<tr><td>Label Copy</td><td>Auto-calculated</td><td>Digital + Physical</td></tr>
+<tr><td>Cover/VSC</td><td>Auto-calculated</td><td>Digital + Physical</td></tr>
+<tr><td>Master</td><td>Auto-calculated</td><td>Digital + Physical</td></tr>
+<tr><td>Agreements</td><td>Manual</td><td>Both configs</td></tr>
+<tr><td>SAA (Side Artist Agreement)</td><td>Manual</td><td>Both configs</td></tr>
+<tr><td>SAMP (Sample Clearance)</td><td>Manual</td><td>Both configs</td></tr>
+<tr><td>A&R Paperwork</td><td>Manual/Auto</td><td>Digital + Physical</td></tr>
+<tr><td>Packaging Graphics</td><td>Manual/Auto</td><td>Physical only</td></tr>
+<tr><td>Test Press Approval</td><td>Manual/Auto</td><td>Physical only</td></tr>
+</table></div>
+<br>
+<p><strong>Weighting formula:</strong> Done/NA/NSI = 2, Waiting/Partial = 1, Required/Unknown = 0</p>
+<p><strong>Score calculation:</strong> Sum of weightings ÷ (count × 2) × 100</p>
+<br>
+<p><strong>Alert thresholds:</strong></p>
+<div class="bullet">• AT_RISK: ≤10 days from release</div>
+<div class="bullet">• WARNING: 11–14 days from release</div>
+<br>
+<h3>3. DSP Partner Catalog (SCUBA APIs)</h3>
+<br>
+<p>Full Spotify, Apple Music, and Deezer catalog access.</p>
+<br>
+<pre><code class="lang-graphql">
+{
+  spotifyArtistById(id: "SPOTIFY_ARTIST_ID") {
+    name
+    popularity
+    genres
+    followers
+  }
+}
+</code></pre>
+<br>
+<p>Returns: artist search, album/track ISRCs, popularity scores, genres, followers. Could replace manual Spotify data pulls for Artist Insights decks.</p>
+<br>
+<h3>4. Finance Label Hierarchy</h3>
+<br>
+<pre><code class="lang-graphql">
+{
+  finLabelT3Parents {
+    nodes {
+      finLabelParentKey
+      finLabelParent {
+        finLabelName
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<p>RCA = E009. Confirmed.</p>
+<br>
+<h3>5. Distribution Channels</h3>
+<br>
+<pre><code class="lang-graphql">
+mktDistChannels {
+  nodes {
+    title
+    isActive
+  }
+}
+</code></pre>
+<br>
+<h3>6. DSP Partners</h3>
+<br>
+<pre><code class="lang-graphql">
+mktPartners {
+  nodes {
+    name
+    isActive
+  }
+}
+</code></pre>
+<br>
+<hr>
+<br>
+<h2>Confirmed Schema / Needs Production Data</h2>
+<br>
+<p>These queries are structurally valid but return limited data in STAGE. Production access (via Brian Lynch's Azure Functions proxy) will unlock them.</p>
+<br>
+<h3>1. Clearance (DRA API)</h3>
+<br>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "ISRC_HERE") {
+    # schema confirmed — returns clearance records
+  }
+}
+</code></pre>
+<br>
+<p><strong>Status:</strong> Query schema confirmed. STAGE recognized SZA "Kill Bill" ISRC but returned no clearance records. Different from "ISRC not found" — the system knows the track, just doesn't have clearance data in STAGE.</p>
+<br>
+<p><strong>Why it matters:</strong> Could fill SAMP "Unknown" gap in Runway. If clearance data exists upstream but shows Unknown in Runway, that's the proof point.</p>
+<br>
+<h3>2. RCA-Only Filtering</h3>
+<br>
+<p><code class="inline">otherFilterOptions: { parentFinanceLabelIds: ["E009"] }</code> — exists in schema documentation but returns "Unknown argument" error in STAGE. Workaround: use tight date ranges with manual artist identification.</p>
+<br>
+<h3>3. Partner Lead Times</h3>
+<br>
+<p>Per-DSP pitch dates, pitch statuses, lead times, week-one forecasts. Schema confirmed; STAGE returns null for most partner-specific fields.</p>
+<br>
+<p><strong>Why it matters:</strong> Drives Orbit outer ring — when each DSP needs what, derived from real data.</p>
+<br>
+<h3>4. D2C Sales Channels (PLAN Schema)</h3>
+<br>
+<p><code class="inline">planProdD2CSalesChannels</code> query exists in Product Planning (PLAN) schema. Confirmed via introspection. Not yet queried for live data.</p>
+<br>
+<p><strong>Critical finding:</strong> D2C data exists in THREE places:</p>
+<p>1. Product Planning (PLAN schema) — structured, in RDX, nobody querying it</p>
+<p>2. D2C Airtable — semi-structured, label-level, managed by D2C team</p>
+<p>3. Release Runway — NOT tracked at all</p>
+<br>
+<h3>5. Repertoire Search (GRPS)</h3>
+<br>
+<p>Participant search, recording projects, songs, publishers, split deals. STAGE has limited artist data (smaller artists not found; larger catalog expected in production).</p>
+<br>
+<p><strong>Why it matters:</strong> Could pre-populate SAA contributor data from GRPS RecordingProject.</p>
+<br>
+<hr>
+<br>
+<h2>RDX-to-Runway Field Mapping</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Runway Field</th><th>RDX Source</th><th>Schema</th></tr>
+<tr><td>SAA</td><td>GRPS RecordingProject</td><td>Repertoire</td></tr>
+<tr><td>SAMP</td><td>Songs + Publishers</td><td>Repertoire</td></tr>
+<tr><td>Agreements</td><td>SplitDeals + CARMA</td><td>Repertoire</td></tr>
+<tr><td>Cover/VSC</td><td>AOMA Media Library</td><td>Media</td></tr>
+<tr><td>Label Copy</td><td>GRPS Repertoire</td><td>Repertoire</td></tr>
+<tr><td>Schedule</td><td>GRPS Release Schedules</td><td>Repertoire</td></tr>
+</table></div>
+<br>
+<p><strong>Per-partner fields:</strong></p>
+<div class="bullet">• leadTime, pitchDate, pitchStatus, pitchCopy, weekOneStream</div>
+<br>
+<p><strong>D2C (NOT in Runway):</strong></p>
+<div class="bullet">• Found in PLAN schema (`planProdD2CSalesChannels`)</div>
+<div class="bullet">• Also in D2C Airtable (16-week vinyl countdown derived from A$AP Rocky / Red Clay Strays / Victoria Monet data)</div>
+<br>
+<hr>
+<br>
+<h2>Playground Tips</h2>
+<br>
+<div class="bullet">• **Ctrl+Space** autocomplete inside parentheses reveals valid arguments</div>
+<div class="bullet">• **DOCS/SCHEMA tabs** (right panel) are fastest for resolving field name errors</div>
+<div class="bullet">• **Introspection pattern:** `{ __type(name: "TypeName") { fields { name type { name } } } }` reliably resolves field name errors</div>
+<div class="bullet">• When a field errors as "must have a selection of subfields" — it's an object type, not a scalar. Add `{ }` with sub-field selection.</div>
+<div class="bullet">• The Playground's autocomplete and schema docs are more reliable than running introspection queries.</div>
+<br>
+<hr>
+<br>
+<h2>What This Unlocks for Campaign Ops</h2>
+<br>
+<p>1. <strong>Artist Insights automation</strong> — SCUBA APIs replace manual Spotify/Apple data pulls for Crawley's decks</p>
+<p>2. <strong>Pre-meeting workability flags</strong> — Pull every release's workability + KPI breakdown before Active Projects</p>
+<p>3. <strong>Clearance gap detection</strong> — Compare clearance API data against Runway's "Unknown" fields (needs production)</p>
+<p>4. <strong>Orbit data layer</strong> — Per-partner lead times and KPI weightings power the outer ring</p>
+<p>5. <strong>DDEX-to-DISCO shortcut</strong> — RDX Catalog Import API (CATI) may shortcut parts of the pipeline</p>
+<p>6. <strong>Change notifications</strong> — RDX can surface when upstream data changes (needs production webhook access)</p>
+<br>
+<hr>
+<br>
+<h2>Next Steps</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Action</th><th>Owner</th><th>Timeline</th></tr>
+<tr><td>Azure Functions proxy for RDX + Airtable</td><td>Brian Lynch (IT)</td><td>In progress</td></tr>
+<tr><td>Production endpoint access</td><td>Brian Lynch / Jordan (sponsor)</td><td>Pending Azure provisioning</td></tr>
+<tr><td>Test clearance queries with production data</td><td>Campaign Ops</td><td>After production access</td></tr>
+<tr><td>Build pre-meeting workability pull</td><td>Campaign Ops</td><td>After production access</td></tr>
+<tr><td>Explore CATI for DDEX pipeline</td><td>Campaign Ops</td><td>After production access</td></tr>
+<tr><td>D2C integration (PLAN schema + Airtable + Runway)</td><td>Campaign Ops</td><td>Phase 2</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Open Questions</h2>
+<br>
+<div class="bullet">• Does `otherFilterOptions` work in production? Or is the argument name different?</div>
+<div class="bullet">• What ISRCs have populated clearance data in production?</div>
+<div class="bullet">• Can Azure Functions proxy both Airtable API and RDX GraphQL?</div>
+<div class="bullet">• Webhook/subscription support for change notifications?</div>
+<br>
+<div class="footer"><p>Meg Hourihan · Campaign Operations · RCA Records</p></div>
+</div>
+</body>
+</html>

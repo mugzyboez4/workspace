@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artist Insights — Crawley Rules</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0F0E0E; --card:#1A1A1A; --off-white:#FCFDF8; --chartreuse:#CDF851; --flame:#FF4A23; --slate:#3E3F41; --fog:#B0A9BE; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--off-white); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+.page { max-width:860px; margin:0 auto; padding:48px; }
+.back { font-family:'DM Mono',monospace; font-size:11px; color:var(--fog); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; }
+.back:hover { color:var(--chartreuse); }
+h1 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.02em; margin:24px 0 8px; border-bottom:3px solid var(--chartreuse); padding-bottom:12px; }
+h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--off-white); margin:32px 0 12px; padding-top:16px; border-top:1px solid var(--slate); }
+h3 { font-size:15px; font-weight:700; color:var(--chartreuse); margin:20px 0 8px; }
+p { font-size:13px; color:var(--fog); line-height:1.7; margin-bottom:4px; }
+p strong { color:var(--off-white); }
+p em { color:var(--chartreuse); font-style:normal; }
+hr { border:none; border-top:1px solid var(--slate); margin:24px 0; }
+br { display:block; content:""; margin:4px 0; }
+.bullet { font-size:13px; color:var(--fog); line-height:1.7; padding-left:16px; margin-bottom:2px; }
+.bullet strong { color:var(--off-white); }
+blockquote { background:var(--card); border-left:3px solid var(--flame); padding:12px 16px; margin:12px 0; font-size:13px; color:var(--fog); }
+pre { background:var(--card); padding:16px; margin:12px 0; overflow-x:auto; border-left:3px solid var(--chartreuse); }
+code { font-family:'DM Mono',monospace; font-size:12px; color:var(--chartreuse); }
+code.inline { background:var(--card); padding:2px 6px; font-size:12px; }
+.table-wrap { overflow-x:auto; margin:12px 0; }
+table { border-collapse:collapse; width:100%; font-size:12px; }
+th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--fog); text-align:left; padding:8px 10px; border-bottom:2px solid var(--slate); background:var(--card); }
+td { padding:8px 10px; border-bottom:1px solid #1A1A1A; color:var(--fog); }
+td strong { color:var(--off-white); }
+.footer { padding-top:24px; border-top:1px solid var(--slate); margin-top:48px; }
+.footer p { font-family:'DM Mono',monospace; font-size:10px; color:var(--slate); }
+@media (max-width:640px) { .page { padding:24px 20px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<a href="index.html" class="back">← Workspace</a>
+<h1>Artist Insights — Crawley Feedback & Editorial Rules</h1>
+<br>
+<p><strong>Consolidated from:</strong> 3/16 in-person meeting, 3/20 in-person meeting, 3/20 written feedback, multiple build iterations.</p>
+<br>
+<hr>
+<br>
+<h2>Non-Negotiable Editorial Rules</h2>
+<br>
+<h3>1. Show, Don't Tell</h3>
+<div class="bullet">• Charts first, commentary second. Every data section needs a visualization.</div>
+<div class="bullet">• The primary purpose is getting people's head around where the artist is — not just insights and takeaways.</div>
+<div class="bullet">• People should be able to interpret the data themselves from the charts. Commentary supports the visual, it doesn't replace it.</div>
+<br>
+<h3>2. Don't Be Too Self-Assured</h3>
+<div class="bullet">• Present findings, don't make proclamations. "The data shows X" not "X is the story."</div>
+<div class="bullet">• Don't editorialize beyond what the data directly supports.</div>
+<div class="bullet">• If making an interpretive claim, hedge it. "This may suggest..." not "This means..."</div>
+<div class="bullet">• Exception: if something is genuinely striking (like a 6,795 index), call it out.</div>
+<br>
+<h3>3. Every Deck Is Independent</h3>
+<div class="bullet">• NEVER reference other artists' decks. No "two audiences again," no "similar to [other artist]."</div>
+<div class="bullet">• Treat each build as the first one ever made.</div>
+<div class="bullet">• The audience may not have seen any other deck.</div>
+<br>
+<h3>4. Don't Force Department Insights</h3>
+<div class="bullet">• This is an overview, not an operations document.</div>
+<div class="bullet">• Do NOT tag actions to departments (no "→ Commercial Partnerships" callouts).</div>
+<div class="bullet">• No ACTION / QUESTION / FLAG toggle system.</div>
+<div class="bullet">• If there's an overwhelming insight, note it once. Otherwise: present the data.</div>
+<br>
+<h3>5. No Names</h3>
+<div class="bullet">• No author names or analyst names in any output.</div>
+<div class="bullet">• Credit line: "Data: Strategic Analytics" only.</div>
+<div class="bullet">• Meg's and Crawley's names removed from published HTML. PPTX/PDF still need update.</div>
+<br>
+<hr>
+<br>
+<h2>V2 Feedback (3/16 Meeting)</h2>
+<br>
+<div class="bullet">• Linear scale on genre charts (no log)</div>
+<div class="bullet">• Tone down confidence in "5 Things" section</div>
+<div class="bullet">• Remove psych source line</div>
+<div class="bullet">• Kill "Thrifted Y2K" (too specific/editorial)</div>
+<div class="bullet">• More charts, less editorial throughout</div>
+<div class="bullet">• Each deck independent (no cross-references)</div>
+<br>
+<hr>
+<br>
+<h2>V5 Feedback (3/20 Meeting — Applied Literally)</h2>
+<br>
+<h3>Section Restructure</h3>
+<div class="bullet">• Rename "Social & Content" → "Social Performance"</div>
+<div class="bullet">• Break socials into three sub-sections, each with individual commentary:</div>
+<p>  - Followers & Growth → commentary</p>
+<p>  - Engagement → commentary</p>
+<p>  - Posting Frequency → commentary</p>
+<div class="bullet">• Lead with follower counts</div>
+<br>
+<h3>Data Presentation</h3>
+<div class="bullet">• Remove ALL P-notation. Say "92nd percentile — excellent" or "92nd percentile, Very Strong" in plain English.</div>
+<div class="bullet">• Simplify benchmark display</div>
+<div class="bullet">• Top 15-20% is fine as description</div>
+<div class="bullet">• Time windows: one year, six months, three months — people get those</div>
+<br>
+<h3>Specific Fixes</h3>
+<div class="bullet">• Restore missing age distribution commentary</div>
+<div class="bullet">• Fix gender commentary (remove "significantly female")</div>
+<div class="bullet">• Update gender colors from pink/blue to chartreuse/teal (pink/blue is outdated)</div>
+<br>
+<h3>Commentary Style</h3>
+<p>Crawley's exact framing example: "92nd percentile, excellent. However, more recent windows show the growth rate is slowing down slightly rather than accelerating."</p>
+<br>
+<h3>Scorecard</h3>
+<div class="bullet">• Likes it as proof of concept, not needed for every artist yet</div>
+<div class="bullet">• Wants to see what builds the score (not a black box)</div>
+<div class="bullet">• Build order: follower growth (done) → streaming growth → TikTok growth → release performance → catalog strength</div>
+<br>
+<hr>
+<br>
+<h2>Color System (V6 — Locked)</h2>
+<br>
+<p>Crawley's core confusion: chartreuse was doing too many jobs. Fixed with shade-based system:</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Color</th><th>Hex</th><th>Purpose</th></tr>
+<tr><td>Chartreuse</td><td>#CDF851</td><td>Brand/structural ONLY</td></tr>
+<tr><td>data-us</td><td>#B8E64A</td><td>US/Instagram data identity</td></tr>
+<tr><td>eval-green</td><td>#4ADE80</td><td>Positive evaluation</td></tr>
+<tr><td>eval-red</td><td>#EF4444</td><td>Negative evaluation</td></tr>
+<tr><td>Flame</td><td>#FF4A23</td><td>TikTok identity EXCLUSIVELY</td></tr>
+</table></div>
+<br>
+<p>Rule: Every color has ONE meaning. Decorative vs. evaluative must be visually distinct.</p>
+<br>
+<hr>
+<br>
+<h2>Instagram Follower Growth Benchmark Framework</h2>
+<br>
+<p>Crawley built a percentile framework for IG follower growth. Applied to horsegiirL:</p>
+<div class="bullet">• P87 composite (Very Strong, Stable momentum) in the 200K-500K tier</div>
+<div class="bullet">• Tier matters: growth in 200K-500K tier is different from growth in 5M+ tier</div>
+<br>
+<hr>
+<br>
+<h2>A&R Evaluation Framework (Next Phase — Jordan/Crawley Direction)</h2>
+<br>
+<p><strong>Goal:</strong> Build KPI evaluation framework:</p>
+<p>1. For each metric (engagement, follower growth, streams), use AI + all artist data to determine what "good" looks like</p>
+<p>2. Segment by artist tier</p>
+<p>3. Combine into overall artist score</p>
+<p>4. Eventually apply to unsigned artists as A&R eval tool</p>
+<br>
+<p><strong>Crawley's key insight on volume vs. growth:</strong></p>
+<p>An artist doing 1M streams consistently with no growth is more valuable than one growing from 118 to 186. Volume matters, not just growth. Need a way to benchmark and contextualize volume — "even if you're not growing, it's okay because your sheer volume is impressive."</p>
+<br>
+<hr>
+<br>
+<h2>Outputs (Always Produce All Three + CSV)</h2>
+<br>
+<p>1. <strong>Interactive HTML</strong> — chart-heavy, dark-mode, sticky nav, Chart.js. Primary deliverable.</p>
+<p>2. <strong>PPTX deck</strong> — 11 slides, brutalist corporate dark mode. For meetings.</p>
+<p>3. <strong>PDF</strong> — converted from PPTX. For send-arounds.</p>
+<p>4. <strong>Psychographics CSV</strong> — generated from web research. For Tableau.</p>
+<br>
+<hr>
+<br>
+<h2>Artist Build Status</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Artist</th><th>HTML</th><th>PPTX</th><th>PDF</th><th>Psych CSV</th><th>Notes</th></tr>
+<tr><td>CA7RIEL & Paco Amoroso</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Complete. Names need removal from PPTX/PDF.</td></tr>
+<tr><td>horsegiirL</td><td>V6</td><td>Needs rebuild to match V6</td><td>Needs rebuild</td><td>✅</td><td>V5 (literal) + V6 (editorial). Photos placeholder.</td></tr>
+<tr><td>Sleepy Hallow</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Next in queue.</td></tr>
+</table></div>
+<br>
+<div class="footer"><p>Meg Hourihan · Campaign Operations · RCA Records</p></div>
+</div>
+</body>
+</html>

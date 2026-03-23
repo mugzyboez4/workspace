@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Release Runway — Workability Snapshot</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0E0E;
+    --card: #1A1A1A;
+    --off-white: #FCFDF8;
+    --chartreuse: #CDF851;
+    --flame: #FF4A23;
+    --slate: #3E3F41;
+    --fog: #B0A9BE;
+    --danger: #FF4A23;
+    --warning: #F5A623;
+    --ok: #4ADE80;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 3px solid var(--flame);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--fog);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    color: var(--off-white);
+    margin-bottom: 8px;
+  }
+
+  .header h1 span {
+    color: var(--flame);
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--fog);
+  }
+
+  .header-sub strong {
+    color: var(--off-white);
+    font-weight: 600;
+  }
+
+  /* HEADLINE STATS */
+  .headline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    padding: 20px 16px;
+    text-align: center;
+    border-top: 3px solid var(--flame);
+  }
+
+  .stat-card.ok {
+    border-top-color: var(--ok);
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--flame);
+    margin-bottom: 4px;
+  }
+
+  .stat-card.ok .stat-number {
+    color: var(--ok);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--fog);
+    text-transform: uppercase;
+  }
+
+  .stat-context {
+    font-size: 11px;
+    color: var(--fog);
+    margin-top: 6px;
+    opacity: 0.7;
+  }
+
+  /* FIELD BREAKDOWN */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--slate);
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .field-row {
+    background: var(--card);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 140px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .field-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--off-white);
+  }
+
+  .field-bar-track {
+    height: 8px;
+    background: #2A2A2A;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .field-bar-fill {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .field-bar-fill.danger { background: var(--flame); }
+  .field-bar-fill.warning { background: var(--warning); }
+  .field-bar-fill.ok { background: var(--ok); }
+
+  .field-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .field-pct.danger { color: var(--flame); }
+  .field-pct.warning { color: var(--warning); }
+  .field-pct.ok { color: var(--ok); }
+
+  .field-row.full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* THIS WEEK / NEXT WEEK */
+  .week-section {
+    margin-bottom: 28px;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .week-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    font-weight: 700;
+  }
+
+  .week-badge.critical {
+    background: var(--flame);
+    color: var(--bg);
+  }
+
+  .week-badge.warning {
+    background: var(--warning);
+    color: var(--bg);
+  }
+
+  .week-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--off-white);
+  }
+
+  .release-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .release-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fog);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--slate);
+  }
+
+  .release-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #1A1A1A;
+    color: var(--fog);
+  }
+
+  .release-table tr:hover td {
+    background: rgba(26,26,26,0.5);
+  }
+
+  .release-table .artist {
+    color: var(--off-white);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .release-table .config {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--fog);
+    opacity: 0.7;
+  }
+
+  .pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    font-weight: 600;
+  }
+
+  .pill.done { background: rgba(74,222,128,0.15); color: var(--ok); }
+  .pill.required { background: rgba(255,74,35,0.15); color: var(--flame); }
+  .pill.partial { background: rgba(245,166,35,0.15); color: var(--warning); }
+  .pill.unknown { background: rgba(176,169,190,0.1); color: var(--fog); border: 1px solid var(--slate); }
+
+  /* THE POINT */
+  .the-point {
+    background: var(--card);
+    border-left: 4px solid var(--chartreuse);
+    padding: 24px 28px;
+    margin-top: 32px;
+  }
+
+  .the-point-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .the-point p {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .the-point p:last-child { margin-bottom: 0; }
+
+  .the-point strong {
+    color: var(--off-white);
+  }
+
+  .the-point em {
+    color: var(--chartreuse);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding-top: 24px;
+    border-top: 1px solid var(--slate);
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--fog);
+    letter-spacing: 0.05em;
+  }
+
+  /* MOBILE */
+  @media (max-width: 700px) {
+    .page { padding: 24px 20px; }
+    .headline { grid-template-columns: repeat(2, 1fr); }
+    .field-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 36px; }
+    .release-table { font-size: 11px; }
+    .release-table th, .release-table td { padding: 6px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Campaign Operations · Release Runway Export · March 23, 2026</div>
+  <h1>Workability <span>Snapshot</span></h1>
+  <p class="header-sub"><strong>113 releases</strong> across <strong>31 artists</strong> · March 27 – May 18, 2026 · RCA Records</p>
+</div>
+
+<!-- HEADLINE STATS -->
+<div class="headline">
+  <div class="stat-card">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">SAA Unknown</div>
+    <div class="stat-context">113 of 113</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">SAMP Unknown</div>
+    <div class="stat-context">113 of 113</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Agreements Required</div>
+    <div class="stat-context">113 of 113</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">0%</div>
+    <div class="stat-label">DSN Received</div>
+    <div class="stat-context">0 of 113</div>
+  </div>
+</div>
+
+<!-- FIELD BREAKDOWN -->
+<div class="section-label">Workability by Field — All 113 Releases</div>
+<div class="field-grid">
+  <div class="field-row">
+    <div class="field-name">SAA</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:100%"></div></div>
+    <div class="field-pct danger">100%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">SAMP</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:100%"></div></div>
+    <div class="field-pct danger">100%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">Agreements</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:100%"></div></div>
+    <div class="field-pct danger">100%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">DSN Received</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:100%"></div></div>
+    <div class="field-pct danger">100%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">Cover / VSC</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:77%"></div></div>
+    <div class="field-pct danger">77%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">Master</div>
+    <div class="field-bar-track"><div class="field-bar-fill danger" style="width:76%"></div></div>
+    <div class="field-pct danger">76%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">LC Complete</div>
+    <div class="field-bar-track"><div class="field-bar-fill warning" style="width:14%"></div></div>
+    <div class="field-pct warning">14%</div>
+  </div>
+  <div class="field-row ok">
+    <div class="field-name">A&R Paperwork</div>
+    <div class="field-bar-track"><div class="field-bar-fill warning" style="width:14%"></div></div>
+    <div class="field-pct warning">14%</div>
+  </div>
+</div>
+
+<!-- THIS WEEK -->
+<div class="week-section">
+  <div class="week-header">
+    <span class="week-badge critical">4 days out</span>
+    <span class="week-title">March 27 — 11 releases, 5 unique products</span>
+  </div>
+  <table class="release-table">
+    <thead>
+      <tr><th>Artist</th><th>Title</th><th>Cover</th><th>Master</th><th>SAA</th><th>SAMP</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="artist">Audrey Hobert</td>
+        <td>Who's the Clown? <span class="config">CD</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Eli</td>
+        <td>Feel Your Rain (Video)</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">girlsweetvoiced</td>
+        <td>Tonight (Official Video)</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Sheff G</td>
+        <td>Him (Audio + Video)</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- NEXT WEEK -->
+<div class="week-section">
+  <div class="week-header">
+    <span class="week-badge warning">11 days out</span>
+    <span class="week-title">April 3 — 17 releases, 8 unique products</span>
+  </div>
+  <table class="release-table">
+    <thead>
+      <tr><th>Artist</th><th>Title</th><th>Cover</th><th>Master</th><th>SAA</th><th>SAMP</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="artist">A$AP Rocky</td>
+        <td>Don't Be Dumb <span class="config">CD Wide</span></td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill done">DONE</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">horsegiirL</td>
+        <td>that's my beach! + NATURE IS HEALING</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">KAYTRANADA</td>
+        <td>AIN'T NO DAMN WAY! <span class="config">Pic Disc</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill partial">PARTIAL</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Paco</td>
+        <td>control. (3 configs)</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Presley Regier</td>
+        <td>Buy Me A Car (3 configs)</td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Sleep Token</td>
+        <td>Caramel <span class="config">12" Vinyl RSD</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill partial">PARTIAL</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Tyler Childers</td>
+        <td>Live From Dinosaur World <span class="config">Vinyl</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill partial">PARTIAL</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+      <tr>
+        <td class="artist">Wolf Alice</td>
+        <td>Spotify Live Room <span class="config">7" RSD</span></td>
+        <td><span class="pill required">REQ</span></td>
+        <td><span class="pill partial">PARTIAL</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+        <td><span class="pill unknown">UNK</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- DSP DELIVERY -->
+<div class="section-label">DSP Delivery Confirmation — All 113 Releases</div>
+<div class="field-grid" style="margin-bottom:16px;">
+  <div class="field-row">
+    <div class="field-name">Spotify</div>
+    <div class="field-bar-track"><div class="field-bar-fill ok" style="width:6%"></div></div>
+    <div class="field-pct danger">6%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">TikTok</div>
+    <div class="field-bar-track"><div class="field-bar-fill ok" style="width:5%"></div></div>
+    <div class="field-pct danger">5%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">Apple Music</div>
+    <div class="field-bar-track"><div class="field-bar-fill ok" style="width:3%"></div></div>
+    <div class="field-pct danger">3%</div>
+  </div>
+  <div class="field-row">
+    <div class="field-name">Amazon</div>
+    <div class="field-bar-track"><div class="field-bar-fill ok" style="width:3%"></div></div>
+    <div class="field-pct danger">3%</div>
+  </div>
+</div>
+
+<!-- THE POINT -->
+<div class="the-point">
+  <div class="the-point-label">What This Means</div>
+  <p><strong>Runway tells you what's red. It can't turn it green.</strong> Four fields — SAA, SAMP, Agreements, and DSN — are effectively non-functional. They exist in the system. Nobody populates them. This isn't a handful of edge cases. It's <em>every release we have scheduled.</em></p>
+  <p>Three RSD vinyl releases (Sleep Token, Tyler Childers, Wolf Alice) drop April 3 with masters only "Partial" and cover art still "Required." Physical product can't be partial 11 days out.</p>
+  <p><strong>The data exists upstream.</strong> Sony's RDX platform has clearance APIs, repertoire data, and partner delivery tracking that could fill these gaps. Nobody at RCA is reading it. <em>Campaign Ops is the human translation layer between the system and the people.</em></p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Meg Hourihan · Campaign Operations · RCA Records</p>
+  <p>Source: Release Runway Workability Export · March 23, 2026</p>
+</div>
+
+</div>
+</body>
+</html>

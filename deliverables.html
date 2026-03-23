@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deliverables Inventory</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0F0E0E; --card:#1A1A1A; --off-white:#FCFDF8; --chartreuse:#CDF851; --flame:#FF4A23; --slate:#3E3F41; --fog:#B0A9BE; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--off-white); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+.page { max-width:860px; margin:0 auto; padding:48px; }
+.back { font-family:'DM Mono',monospace; font-size:11px; color:var(--fog); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; }
+.back:hover { color:var(--chartreuse); }
+h1 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.02em; margin:24px 0 8px; border-bottom:3px solid var(--chartreuse); padding-bottom:12px; }
+h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--off-white); margin:32px 0 12px; padding-top:16px; border-top:1px solid var(--slate); }
+h3 { font-size:15px; font-weight:700; color:var(--chartreuse); margin:20px 0 8px; }
+p { font-size:13px; color:var(--fog); line-height:1.7; margin-bottom:4px; }
+p strong { color:var(--off-white); }
+p em { color:var(--chartreuse); font-style:normal; }
+hr { border:none; border-top:1px solid var(--slate); margin:24px 0; }
+br { display:block; content:""; margin:4px 0; }
+.bullet { font-size:13px; color:var(--fog); line-height:1.7; padding-left:16px; margin-bottom:2px; }
+.bullet strong { color:var(--off-white); }
+blockquote { background:var(--card); border-left:3px solid var(--flame); padding:12px 16px; margin:12px 0; font-size:13px; color:var(--fog); }
+pre { background:var(--card); padding:16px; margin:12px 0; overflow-x:auto; border-left:3px solid var(--chartreuse); }
+code { font-family:'DM Mono',monospace; font-size:12px; color:var(--chartreuse); }
+code.inline { background:var(--card); padding:2px 6px; font-size:12px; }
+.table-wrap { overflow-x:auto; margin:12px 0; }
+table { border-collapse:collapse; width:100%; font-size:12px; }
+th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--fog); text-align:left; padding:8px 10px; border-bottom:2px solid var(--slate); background:var(--card); }
+td { padding:8px 10px; border-bottom:1px solid #1A1A1A; color:var(--fog); }
+td strong { color:var(--off-white); }
+.footer { padding-top:24px; border-top:1px solid var(--slate); margin-top:48px; }
+.footer p { font-family:'DM Mono',monospace; font-size:10px; color:var(--slate); }
+@media (max-width:640px) { .page { padding:24px 20px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<a href="index.html" class="back">← Workspace</a>
+<h1>Campaign Ops — Deliverables Inventory</h1>
+<br>
+<p><strong>Last updated:</strong> March 22, 2026</p>
+<br>
+<p>This tracks every deliverable built since February 2026, where it lives, and its current status.</p>
+<br>
+<hr>
+<br>
+<h2>TEMPO Site Pages (Live)</h2>
+<br>
+<p>All live at operations.mugzyboez.co and mugzyboez4.github.io/operations/</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Page</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Home</td><td>✅ Live</td><td>Data-first ("113 active RCA artists"), five approved verbs, values statement</td></tr>
+<tr><td>Orbit</td><td>✅ Live</td><td>Interactive concentric ring visualization with feedback system</td></tr>
+<tr><td>Visibility</td><td>✅ Live</td><td>113 real Airtable artists with team assignments</td></tr>
+<tr><td>Insights</td><td>✅ Live</td><td>Links to Artist Insights decks (separate from internal Campaign Ops materials)</td></tr>
+<tr><td>Meeting Flow</td><td>✅ Live</td><td>By-artist Goal Brief/Notes toggle</td></tr>
+<tr><td>Pipeline</td><td>✅ Live</td><td>Expandable items</td></tr>
+<tr><td>Template</td><td>✅ Live</td><td>Auto-generation vision with color-coded data sources</td></tr>
+<tr><td>Library dropdown</td><td>✅ Live</td><td>Meetings, Tools, Artists (Isaia Huron, ARFOM), Archive</td></tr>
+</table></div>
+<br>
+<p>Feedback system (floating pencil button + inline toggles via Netlify Forms) on Orbit, Visibility, Meeting Flow.</p>
+<br>
+<hr>
+<br>
+<h2>Artist Insights Decks</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Artist</th><th>HTML</th><th>PPTX</th><th>PDF</th><th>CSV</th><th>Status</th></tr>
+<tr><td>CA7RIEL & Paco Amoroso</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>Complete. Names removed from HTML. PPTX/PDF still have names.</td></tr>
+<tr><td>horsegiirL</td><td>V6</td><td>Needs rebuild</td><td>Needs rebuild</td><td>✅</td><td>V5 (literal Crawley feedback) and V6 (fresh editorial) built. Shade-based color system applied.</td></tr>
+<tr><td>Sleepy Hallow</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Next in queue per Crawley</td></tr>
+</table></div>
+<br>
+<p><strong>Color system (V6, locked):</strong></p>
+<div class="bullet">• Chartreuse #CDF851 = brand/structural only</div>
+<div class="bullet">• data-us #B8E64A = US/Instagram data identity</div>
+<div class="bullet">• eval-green #4ADE80 = positive evaluation</div>
+<div class="bullet">• eval-red #EF4444 = negative evaluation</div>
+<div class="bullet">• Flame #FF4A23 = TikTok identity exclusively</div>
+<br>
+<hr>
+<br>
+<h2>Artist Briefings</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Artist</th><th>Format</th><th>Status</th></tr>
+<tr><td>femtanyl</td><td>HTML (email-safe)</td><td>✅ Complete — template prototype. Impressed Fleck.</td></tr>
+<tr><td>Benny Bellson</td><td>HTML (email-safe)</td><td>✅ Complete</td></tr>
+<tr><td>Baby J</td><td>—</td><td>In progress (info gathered)</td></tr>
+<tr><td>Hailey Picardi</td><td>—</td><td>In progress (info gathered)</td></tr>
+<tr><td>Stella Lefty</td><td>—</td><td>In progress (info gathered from internal pitch deck)</td></tr>
+<tr><td>Laufey</td><td>—</td><td>Info upload failed multiple times — needs re-attempt</td></tr>
+</table></div>
+<br>
+<p>Template locked at 13 sections, 13 departments.</p>
+<br>
+<hr>
+<br>
+<h2>Artist Prep Packages</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Artist</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Isaia Huron</td><td>✅ Prototype</td><td>4-tab interactive HTML on TEMPO. Slang JV. Real data.</td></tr>
+<tr><td>A Room Full of Mirrors (ARFOM)</td><td>✅ Complete</td><td>Dossier + Briefing. Browser + email-safe versions. Punch-led collective. Department priority tiers (Critical/High/Monitor).</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Meeting Outputs</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Date</th><th>Meeting</th><th>Goal Brief</th><th>Notes</th><th>Transcript Processed</th></tr>
+<tr><td>Feb 18</td><td>Active Projects</td><td>✅ V3</td><td>✅ (by-artist + email-safe)</td><td>✅ Three-pass analysis</td></tr>
+<tr><td>Mar 11</td><td>Active Projects</td><td>✅</td><td>✅</td><td>✅ (partial — 20min recording dropout, 7 artists missed)</td></tr>
+<tr><td>Mar 18</td><td>Active Projects</td><td>✅ V3 (11 artists)</td><td>✅ (55 flagged items)</td><td>✅ Full three-pass</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Strategic Documents</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Document</th><th>Format</th><th>Status</th><th>Audience</th></tr>
+<tr><td>System Map (6-tab)</td><td>HTML</td><td>✅ Complete</td><td>Jordan/internal</td></tr>
+<tr><td>Orbit Framework</td><td>HTML (interactive)</td><td>✅ Live on TEMPO</td><td>All</td></tr>
+<tr><td>Campaign Phase Definitions</td><td>HTML</td><td>✅ Complete</td><td>All</td></tr>
+<tr><td>Department Timeline Discovery Questionnaire</td><td>HTML</td><td>✅ Complete</td><td>Department leads</td></tr>
+<tr><td>Alert Dashboard</td><td>HTML</td><td>✅ Complete</td><td>Campaign Ops internal</td></tr>
+<tr><td>Artist Evaluation Framework</td><td>HTML + docx</td><td>✅ Complete (3/21)</td><td>Jordan/Crawley</td></tr>
+<tr><td>D2C Orbit Timeline</td><td>HTML</td><td>✅ Complete (3/21)</td><td>Jordan</td></tr>
+<tr><td>RDX Discovery Brief for Jordan</td><td>docx</td><td>✅ Complete (3/21)</td><td>Jordan</td></tr>
+<tr><td>Karen LabelOps Rundown V2</td><td>HTML (email-safe)</td><td>✅ Complete</td><td>Karen</td></tr>
+<tr><td>Strategic Roadmap (6 lanes)</td><td>HTML</td><td>✅ Complete</td><td>Karen/leadership</td></tr>
+<tr><td>Position Justification Business Case</td><td>docx (14 sections)</td><td>✅ Complete (some placeholder data)</td><td>HR/Finance/Karen</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Rate Card / Licensing Tools</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Tool</th><th>Format</th><th>Status</th></tr>
+<tr><td>RCA Rate Matrix V1</td><td>HTML (interactive)</td><td>✅ Complete — editable multipliers, heat grid, delta comparison</td></tr>
+<tr><td>Maia Rate Card Comparison</td><td>Analysis</td><td>✅ Structural comparison done. Waiting for actual Maia rate card.</td></tr>
+<tr><td>Sync Deal Closeout Tracker</td><td>Excel (5 tabs)</td><td>✅ Populated from GOLD export (4,251 deals)</td></tr>
+<tr><td>Sync Deal Agent (Copilot Studio)</td><td>System prompt + knowledge base</td><td>✅ Built, not deployed</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Operational Tools</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Tool</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Meeting Capture Protocol (Pocket)</td><td>✅ Complete</td><td>5-step pipeline, all 6 meeting types, consent language</td></tr>
+<tr><td>Label Ops Agent (Copilot Studio)</td><td>✅ Live</td><td>GPT-4o, meeting recaps + stakeholder comms. Not for artist briefings.</td></tr>
+<tr><td>Personal Project Tracker</td><td>✅ Complete</td><td>Excel, 24 projects across 8 workstreams, Copilot integration</td></tr>
+<tr><td>"Life on the Lot" Employee Guide</td><td>✅ Complete (3/19)</td><td>Interactive editable dark-mode HTML</td></tr>
+<tr><td>Handoff Map (Campaign Ops ↔ Campaign Leads)</td><td>❌ Not built</td><td>Jordan flagged as urgent priority</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Documents with Outdated Naming</h2>
+<br>
+<p>The following may still reference old names (Label Operations, Label Ops, Internal Communications, 6th Pillar) and need Campaign Operations rename if re-distributed:</p>
+<br>
+<div class="bullet">• CLAUDE.md in operations repo</div>
+<div class="bullet">• Copilot Studio agent system prompt</div>
+<div class="bullet">• Some project knowledge files</div>
+<div class="bullet">• Position Justification Business Case</div>
+<div class="bullet">• Early Karen-facing documents</div>
+<br>
+<hr>
+<br>
+<h2>DDEX / Pipeline</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>Status</th></tr>
+<tr><td>DDEX Strategy Doc</td><td>✅ Complete</td></tr>
+<tr><td>DDEX Meeting Prep (stakeholder talking points)</td><td>✅ Complete</td></tr>
+<tr><td>DDEX-to-DISCO Pipeline</td><td>In testing with Sony Production UK / RCA Digital Ops</td></tr>
+<tr><td>ERN-to-Runway Field Mapping</td><td>✅ Complete</td></tr>
+<tr><td>Three Systems Comparison</td><td>✅ Complete</td></tr>
+<tr><td>RDX Reference Guide</td><td>✅ Reconstructed (see separate file)</td></tr>
+<tr><td>RDX Query Skill</td><td>✅ Reconstructed (see separate file)</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Rights Translation Maps</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Department</th><th>Status</th></tr>
+<tr><td>Sync & Licensing</td><td>✅ Prototype complete</td></tr>
+<tr><td>A&R</td><td>Not started</td></tr>
+<tr><td>A&R Administration</td><td>Not started</td></tr>
+<tr><td>Business & Legal</td><td>Not started</td></tr>
+<tr><td>Marketing</td><td>Not started</td></tr>
+<tr><td>Digital/DSP</td><td>Not started</td></tr>
+<tr><td>Publicity</td><td>Not started</td></tr>
+<tr><td>Radio</td><td>Not started</td></tr>
+<tr><td>Creative & Content</td><td>Not started</td></tr>
+<tr><td>International</td><td>Not started</td></tr>
+<tr><td>Brand Partnerships</td><td>Not started</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>A&R Meeting Documents (Adonis System)</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Meeting</th><th>Artists Built</th><th>Status</th></tr>
+<tr><td>Meeting 01: Onboarding</td><td>Baby J, Hailey Picardi</td><td>✅ Complete (chartreuse accent, 12-dept grid)</td></tr>
+<tr><td>Meeting 02: Kickoff</td><td>Baby J, Hailey Picardi</td><td>✅ Complete (flame accent, artist proposition)</td></tr>
+<tr><td>Meeting 03: Blueprint</td><td>Baby J, Hailey Picardi</td><td>✅ Complete (both accents, full campaign timeline)</td></tr>
+</table></div>
+<br>
+<hr>
+<br>
+<h2>Sony AI Tools Deck</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>Status</th></tr>
+<tr><td>Sony AI Tools 2026 deck</td><td>✅ Complete (19 slides, dark monochrome, IAMSOUND-inspired)</td></tr>
+<tr><td>Compliance/governance slide</td><td>✅ Included (Deep Voodoo, Move.ai, Moonvalley flagged)</td></tr>
+</table></div>
+<br>
+<div class="footer"><p>Meg Hourihan · Campaign Operations · RCA Records</p></div>
+</div>
+</body>
+</html>

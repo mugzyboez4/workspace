@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDX Workability Cross-Reference Queries</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg:#0F0E0E; --card:#1A1A1A; --off-white:#FCFDF8; --chartreuse:#CDF851; --flame:#FF4A23; --slate:#3E3F41; --fog:#B0A9BE; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--off-white); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+.page { max-width:860px; margin:0 auto; padding:48px; }
+.back { font-family:'DM Mono',monospace; font-size:11px; color:var(--fog); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; }
+.back:hover { color:var(--chartreuse); }
+h1 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:0.02em; margin:24px 0 8px; border-bottom:3px solid var(--chartreuse); padding-bottom:12px; }
+h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--off-white); margin:32px 0 12px; padding-top:16px; border-top:1px solid var(--slate); }
+h3 { font-size:15px; font-weight:700; color:var(--chartreuse); margin:20px 0 8px; }
+p { font-size:13px; color:var(--fog); line-height:1.7; margin-bottom:4px; }
+p strong { color:var(--off-white); }
+p em { color:var(--chartreuse); font-style:normal; }
+hr { border:none; border-top:1px solid var(--slate); margin:24px 0; }
+br { display:block; content:""; margin:4px 0; }
+.bullet { font-size:13px; color:var(--fog); line-height:1.7; padding-left:16px; margin-bottom:2px; }
+.bullet strong { color:var(--off-white); }
+blockquote { background:var(--card); border-left:3px solid var(--flame); padding:12px 16px; margin:12px 0; font-size:13px; color:var(--fog); }
+pre { background:var(--card); padding:16px; margin:12px 0; overflow-x:auto; border-left:3px solid var(--chartreuse); }
+code { font-family:'DM Mono',monospace; font-size:12px; color:var(--chartreuse); }
+code.inline { background:var(--card); padding:2px 6px; font-size:12px; }
+.table-wrap { overflow-x:auto; margin:12px 0; }
+table { border-collapse:collapse; width:100%; font-size:12px; }
+th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--fog); text-align:left; padding:8px 10px; border-bottom:2px solid var(--slate); background:var(--card); }
+td { padding:8px 10px; border-bottom:1px solid #1A1A1A; color:var(--fog); }
+td strong { color:var(--off-white); }
+.footer { padding-top:24px; border-top:1px solid var(--slate); margin-top:48px; }
+.footer p { font-family:'DM Mono',monospace; font-size:10px; color:var(--slate); }
+@media (max-width:640px) { .page { padding:24px 20px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<a href="index.html" class="back">← Workspace</a>
+<h1>RDX Playground Queries — Workability Cross-Reference</h1>
+<h2>March 23, 2026</h2>
+<br>
+<p>Copy-paste these into rdx-federation-stage.smecloudops.com/playground/</p>
+<p>Run them in order. Screenshot any results.</p>
+<br>
+<hr>
+<br>
+<h2>PRIORITY 1: Clearance Queries (SAA/SAMP proof point)</h2>
+<br>
+<p>These are the money shots. If ANY of these return clearance data</p>
+<p>while Runway shows "Unknown," that's the gap made visible.</p>
+<br>
+<h3>Sheff G — "Him" (hip-hop = high sample probability)</h3>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "USRC12600343") {
+    nodes {
+      status
+      clearanceType
+      originalWork
+      rightsHolder
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>Ray Vaughn feat. Ty Dolla $ign — "Water" (FEATURE = SAA relevance)</h3>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "USRC12600494") {
+    nodes {
+      status
+      clearanceType
+      originalWork
+      rightsHolder
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>Osé feat. Victony — "Bother Me" (FEATURE = SAA relevance)</h3>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "USRC12600224") {
+    nodes {
+      status
+      clearanceType
+      originalWork
+      rightsHolder
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>horsegiirL — "that's my beach!" (your proof-point artist)</h3>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "USRC12600092") {
+    nodes {
+      status
+      clearanceType
+      originalWork
+      rightsHolder
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>Sleepy Hallow — "Young & Dumb" (hip-hop = sample probability)</h3>
+<pre><code class="lang-graphql">
+{
+  clearancesForIsrc(isrc: "USRC12600495") {
+    nodes {
+      status
+      clearanceType
+      originalWork
+      rightsHolder
+    }
+  }
+}
+</code></pre>
+<br>
+<blockquote>NOTE: If these error on the sub-fields, try just:</blockquote>
+<blockquote>```graphql</blockquote>
+<blockquote>{ clearancesForIsrc(isrc: "USRC12600343") { __typename } }</blockquote>
+<blockquote>```</blockquote>
+<blockquote>That tells you if the query resolves at all.</blockquote>
+<br>
+<hr>
+<br>
+<h2>PRIORITY 2: Mega-Query for Same Date Range</h2>
+<br>
+<p>Compare what RDX returns vs. what the export shows.</p>
+<p>Using the same window: March 27 – May 18.</p>
+<br>
+<pre><code class="lang-graphql">
+{
+  mktTimeline(fromDate: "2026-03-27", toDate: "2026-05-18") {
+    nodes {
+      mktProducts {
+        nodes {
+          title
+          artistName
+          streetDate
+          workability {
+            score
+            kpis {
+              nodes {
+                name
+                status
+                weighting
+              }
+            }
+          }
+          alerts {
+            alertType
+            daysUntilRelease
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<blockquote>What to look for:</blockquote>
+<blockquote>- Do the workability scores match what the export shows?</blockquote>
+<blockquote>- Are there AT_RISK or WARNING alerts on the March 27 releases?</blockquote>
+<blockquote>- Does RDX show any KPI statuses that differ from the export?</blockquote>
+<br>
+<hr>
+<br>
+<h2>PRIORITY 3: Repertoire / Contributor Data (SAA source)</h2>
+<br>
+<p>If clearance queries come back empty, try the repertoire angle.</p>
+<p>These look for contributor/participant data that could fill SAA.</p>
+<br>
+<h3>Search for Sheff G in repertoire</h3>
+<pre><code class="lang-graphql">
+{
+  participantSearch(name: "Sheff G") {
+    nodes {
+      name
+      role
+      recordingProjects {
+        nodes {
+          title
+          status
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>Search for A$AP Rocky in repertoire</h3>
+<pre><code class="lang-graphql">
+{
+  participantSearch(name: "ASAP Rocky") {
+    nodes {
+      name
+      role
+      recordingProjects {
+        nodes {
+          title
+          status
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<h3>Search for Ray Vaughn (has a feature = SAA)</h3>
+<pre><code class="lang-graphql">
+{
+  participantSearch(name: "Ray Vaughn") {
+    nodes {
+      name
+      role
+      recordingProjects {
+        nodes {
+          title
+          status
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<br>
+<blockquote>NOTE: If participantSearch errors, try introspecting first:</blockquote>
+<blockquote>```graphql</blockquote>
+<blockquote>{ __type(name: "Query") { fields { name } } }</blockquote>
+<blockquote>```</blockquote>
+<blockquote>Then Ctrl+F for "participant" or "repertoire" in the results.</blockquote>
+<br>
+<hr>
+<br>
+<h2>PRIORITY 4: SCUBA / Spotify Catalog (Artist Insights angle)</h2>
+<br>
+<p>Less about workability, more about proving the data pipe works.</p>
+<p>If these return rich metadata, it proves SCUBA can replace</p>
+<p>manual data pulls for Crawley's insights decks.</p>
+<br>
+<h3>horsegiirL Spotify (you know this artist's data)</h3>
+<pre><code class="lang-graphql">
+{
+  spotifyArtistById(id: "4TXzFwKOHVRMPSiamcrya0") {
+    name
+    popularity
+    genres
+    followers
+  }
+}
+</code></pre>
+<br>
+<h3>Sleepy Hallow Spotify</h3>
+<pre><code class="lang-graphql">
+{
+  spotifyArtistById(id: "0rPFhJknwkFaMb4tOUdKJ4") {
+    name
+    popularity
+    genres
+    followers
+  }
+}
+</code></pre>
+<br>
+<h3>A$AP Rocky Spotify</h3>
+<pre><code class="lang-graphql">
+{
+  spotifyArtistById(id: "13ubrt8QOOCPljQ2FL1Kg8") {
+    name
+    popularity
+    genres
+    followers
+  }
+}
+</code></pre>
+<br>
+<blockquote>If these return data, screenshot them. That's a same-day</blockquote>
+<blockquote>deliverable for Crawley: "I can pull this in 10 seconds</blockquote>
+<blockquote>instead of you doing it manually."</blockquote>
+<br>
+<hr>
+<br>
+<h2>WHAT TO DO WITH RESULTS</h2>
+<br>
+<h3>If clearance queries return data:</h3>
+<p>Screenshot it. Put it next to the workability snapshot showing</p>
+<p>"Unknown." That's your one-slide proof: "The data exists. Nobody</p>
+<p>is reading it." Send to Jordan immediately.</p>
+<br>
+<h3>If clearance queries return empty:</h3>
+<p>That's expected in STAGE. Note it and move on. The query WORKS —</p>
+<p>you just need production data. Message to Jordan:</p>
+<p>"Query confirmed, need production access to see real data."</p>
+<br>
+<h3>If mega-query workability scores differ from export:</h3>
+<p>That's actually MORE interesting — it means data is updating</p>
+<p>in one system but not flowing to the other. Screenshot both.</p>
+<br>
+<h3>If Spotify/SCUBA returns rich data:</h3>
+<p>Screenshot it and save for Crawley. This is a Week 2 deliverable:</p>
+<p>"I can automate the data pull for your insights decks."</p>
+<br>
+<hr>
+<br>
+<h2>ISRCs FROM EXPORT — FULL REFERENCE</h2>
+<br>
+<h3>Releases with Features (SAA-relevant)</h3>
+<div class="bullet">• Ray Vaughn feat. Ty Dolla $ign "Water": USRC12600494 / USRC12600493</div>
+<div class="bullet">• Osé feat. Victony "Bother Me": USRC12600224 / USRC12600225</div>
+<br>
+<h3>This Week (Mar 27)</h3>
+<div class="bullet">• Eli "Feel Your Rain": USRC12600348</div>
+<div class="bullet">• girlsweetvoiced "Tonight": USRC12600342</div>
+<div class="bullet">• Isaia Huron "This Girl Wants Everything": USRC12600391</div>
+<div class="bullet">• Sheff G "Him": USRC12600343</div>
+<br>
+<h3>Next Week (Apr 3)</h3>
+<div class="bullet">• horsegiirL "that's my beach!": USRC12600092</div>
+<div class="bullet">• Paco "control.": USRC12600333</div>
+<div class="bullet">• Presley Regier "Buy Me A Car": USRC12600172</div>
+<div class="bullet">• Ally Salort "Finish Line": USRC12600420</div>
+<br>
+<h3>Active Projects Artists (Apr 17)</h3>
+<div class="bullet">• Baby J "Fallen Angel": USRC12600344</div>
+<div class="bullet">• Hailey Picardi "TBD Single 4": USRC12600380</div>
+<div class="bullet">• Sleepy Hallow "Young & Dumb": USRC12600495</div>
+<div class="bullet">• Suzy Clue "Feed": USRC12600491</div>
+<br>
+<h3>Later Releases</h3>
+<div class="bullet">• horsegiirL "earth is turning": USRC12600093</div>
+<div class="bullet">• The Red Clay Strays "Demons In Your Choir": USRC12600018</div>
+<div class="bullet">• Ari Abdul "Ego": USRC12600487</div>
+<div class="bullet">• Cat Burns "Sober": GB1102600006</div>
+<br>
+<div class="footer"><p>Meg Hourihan · Campaign Operations · RCA Records</p></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handoff Map — Campaign Ops ↔ Campaign Leads</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F0E0E;--card:#1A1A1A;--card-hover:#222;--off-white:#FCFDF8;--chartreuse:#CDF851;--flame:#FF4A23;--slate:#3E3F41;--fog:#B0A9BE}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--off-white);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.page{max-width:940px;margin:0 auto;padding:48px}
+.header{border-bottom:3px solid var(--chartreuse);padding-bottom:24px;margin-bottom:36px}
+.header-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--chartreuse);text-transform:uppercase;margin-bottom:12px}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,50px);letter-spacing:.02em;line-height:1.05;margin-bottom:12px}
+.header h1 .arrow{color:var(--chartreuse)}
+.header-sub{font-size:14px;color:var(--fog);max-width:640px;line-height:1.7}
+.header-sub strong{color:var(--off-white);font-weight:600}
+.principle{background:var(--card);border-left:4px solid var(--chartreuse);padding:20px 24px;margin-bottom:40px}
+.principle-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--chartreuse);text-transform:uppercase;margin-bottom:8px}
+.principle p{font-size:14px;color:var(--fog);line-height:1.7}
+.principle strong{color:var(--off-white)}
+.principle em{color:var(--chartreuse);font-style:normal;font-weight:600}
+.legend{display:grid;grid-template-columns:1fr 140px 1fr;gap:0;margin-bottom:12px;padding:0 4px}
+.legend-item{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);padding:8px 16px}
+.legend-item:nth-child(2){text-align:center;color:var(--chartreuse)}
+.legend-item:nth-child(3){text-align:right}
+.controls{display:flex;justify-content:flex-end;margin-bottom:12px}
+.expand-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--fog);background:none;border:1px solid var(--slate);padding:6px 14px;cursor:pointer;text-transform:uppercase;transition:all .15s}
+.expand-btn:hover{color:var(--chartreuse);border-color:var(--chartreuse)}
+.moments{display:grid;gap:12px;margin-bottom:48px}
+.moment{background:var(--card);overflow:hidden}
+.moment-header{display:grid;grid-template-columns:48px 1fr auto;align-items:center;padding:14px 20px;cursor:pointer;transition:background .15s}
+.moment-header:hover{background:var(--card-hover)}
+.moment-number{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--chartreuse);line-height:1}
+.moment.urgent .moment-number{color:var(--flame)}
+.moment-title{font-size:14px;font-weight:700;color:var(--off-white)}
+.moment-trigger{font-size:11px;color:var(--fog);margin-top:2px}
+.moment-toggle{font-family:'DM Mono',monospace;font-size:18px;color:var(--slate);transition:transform .2s,color .15s;user-select:none}
+.moment.open .moment-toggle{transform:rotate(45deg);color:var(--chartreuse)}
+.moment-body{display:none;padding:0 20px 20px}
+.moment.open .moment-body{display:block}
+.flow{display:grid;grid-template-columns:1fr 140px 1fr;gap:0;margin-top:12px}
+.flow-col{padding:16px}
+.flow-col:nth-child(1){border-right:1px solid var(--slate)}
+.flow-col:nth-child(3){border-left:1px solid var(--slate)}
+.flow-col.center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 12px}
+.handoff-artifact{background:rgba(205,248,81,.08);border:1px solid var(--chartreuse);padding:10px 14px;text-align:center;width:100%}
+.handoff-artifact-name{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--chartreuse);text-transform:uppercase;font-weight:600}
+.handoff-arrow{font-family:'DM Mono',monospace;font-size:16px;color:var(--chartreuse);margin:6px 0}
+.flow-role{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.flow-role.ops{color:var(--chartreuse)}
+.flow-role.leads{color:var(--fog)}
+.flow-verb{font-size:10px;font-family:'DM Mono',monospace;display:inline-block;padding:1px 6px;margin-bottom:6px;margin-right:4px;letter-spacing:.06em;text-transform:uppercase;background:rgba(205,248,81,.1);color:var(--chartreuse);font-weight:500}
+.flow-text{font-size:12px;color:var(--fog);line-height:1.65}
+.flow-text strong{color:var(--off-white);font-weight:600}
+.boundaries{margin-top:48px;padding-top:40px;border-top:2px solid var(--slate)}
+.boundaries-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.02em;color:var(--fog);margin-bottom:20px}
+.boundaries-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.boundary-card{background:var(--card);padding:20px 24px}
+.boundary-card-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.boundary-card-label.ops{color:var(--chartreuse)}
+.boundary-card-label.leads{color:var(--fog)}
+.boundary-item{font-size:12px;color:var(--fog);line-height:1.6;padding-left:16px;position:relative;margin-bottom:6px}
+.boundary-item::before{content:'—';position:absolute;left:0;color:var(--slate)}
+.the-point{background:var(--card);border-left:4px solid var(--chartreuse);padding:24px 28px;margin-top:40px}
+.the-point-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--chartreuse);text-transform:uppercase;margin-bottom:10px}
+.the-point p{font-size:14px;color:var(--fog);line-height:1.7}
+.the-point strong{color:var(--off-white)}
+.the-point em{color:var(--chartreuse);font-style:normal;font-weight:600}
+.footer{padding-top:24px;border-top:1px solid var(--slate);margin-top:48px;display:flex;justify-content:space-between}
+.footer p{font-family:'DM Mono',monospace;font-size:10px;color:var(--slate);letter-spacing:.05em}
+@media(max-width:700px){.page{padding:24px 20px}.flow{grid-template-columns:1fr}.flow-col{border:none!important;padding:12px 0}.flow-col:nth-child(1){border-bottom:1px solid var(--slate)!important}.flow-col:nth-child(3){border-top:1px solid var(--slate)!important}.legend{display:none}.boundaries-grid{grid-template-columns:1fr}.moment-header{grid-template-columns:36px 1fr auto}.footer{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="header-label">Campaign Operations · Working Draft</div>
+  <h1>Handoff Map <span class="arrow">↔</span></h1>
+  <p class="header-sub">How information moves between <strong>Campaign Ops</strong> and <strong>Campaign Leads</strong>. Not who owns what — <strong>what flows where and when.</strong></p>
+</div>
+
+<div class="principle">
+  <div class="principle-label">The Operating Principle</div>
+  <p><strong>Campaign Ops doesn't do any department's job.</strong> It makes sure the output of one department's work becomes the input for the next department's work. Campaign Leads is the biggest department that relies on this — but so is everyone else. The handoff point is the <em>artifact that crosses the line</em>, not the person who sends it.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item">Campaign Ops Does</div>
+  <div class="legend-item">What Crosses</div>
+  <div class="legend-item">Campaign Leads Does</div>
+</div>
+
+<div class="controls">
+  <button class="expand-btn" onclick="toggleAll()">Expand All</button>
+</div>
+
+<div class="moments">
+
+  <div class="moment open" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">01</div>
+      <div class="moment-title-block"><div class="moment-title">New Artist Signed</div><div class="moment-trigger">Trigger: A&R closes deal, onboarding begins</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Surfaces</div><div class="flow-text">Builds Prep Package (4-tab intake assessment, mgmt questionnaire, dossier) and Artist Briefing (13 departments). Distributes to all teams so <strong>every department knows who just signed and what they need to know</strong> from day one.</div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Artist Briefing</div></div><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Prep Package</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text">Receives briefing, begins building <strong>campaign strategy and positioning</strong>. Knows the artist's deal structure, creative direction, and restrictions before the first planning conversation — not after.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment urgent" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">02</div>
+      <div class="moment-title-block"><div class="moment-title">Release Gets Scheduled</div><div class="moment-trigger">Trigger: Street date approved in Exec Scheduling (Friday)</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Flags</div><div class="flow-text">Confirms workability status from Release Runway. Flags specific gaps — <strong>Cover, Master, SAA, SAMP</strong> — and identifies upstream blockers. Surfaces anything that might shift the date before teams plan around it.</div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Workability Flag</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text">Confirmed to <strong>plan against the date</strong>. Knows what's clear vs. what might shift. Builds campaign timeline and promotional strategy with confidence — or flags if the date is unrealistic.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">03</div>
+      <div class="moment-title-block"><div class="moment-title">Pre-Meeting Prep</div><div class="moment-trigger">Trigger: 24 hours before Active Projects (Wednesday)</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Tracks</div><div class="flow-verb">Surfaces</div><div class="flow-text">Builds Goal Brief — pulls Airtable data, Runway status, carry-forwards from prior meetings, upstream signals from SMT and A&R. <strong>Every person walks into the meeting with the same picture.</strong></div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Goal Brief V3</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text">Reviews their artists' status, comes prepared with updates. <strong>Knows what's being discussed before the room opens.</strong> No scrambling to remember what was decided last time.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">04</div>
+      <div class="moment-title-block"><div class="moment-title">In-Meeting Decision</div><div class="moment-trigger">Trigger: Decision made in the room</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Tracks</div><div class="flow-verb">Confirms</div><div class="flow-text">Captures decision in real time. Tags urgency. Identifies which departments are affected — including teams <strong>not in the room</strong> who need to know.</div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Live Capture</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text"><strong>Claims their action items.</strong> Flags capacity issues. Knows immediately whether a decision affects their current plan — doesn't find out two weeks later.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">05</div>
+      <div class="moment-title-block"><div class="moment-title">Post-Meeting Distribution</div><div class="moment-trigger">Trigger: Active Projects meeting ends</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Surfaces</div><div class="flow-verb">Prompts</div><div class="flow-text">Three-pass analysis: flagged items, per-artist intel, cross-department patterns. By-artist notes distributed to full list. Signals flagged separately for <strong>teams that weren't in the room.</strong></div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Meeting Notes</div></div><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Cross-Dept Flags</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text">Acts on marketing-specific items. <strong>Knows what other departments decided that affects their plan</strong> — Radio timeline shift, Creative blocker resolved, A&R direction change.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment urgent" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">06</div>
+      <div class="moment-title-block"><div class="moment-title">Upstream Change</div><div class="moment-trigger">Trigger: Something changes mid-cycle — track pulled, clearance issue, feature falls through</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Flags</div><div class="flow-verb">Prompts</div><div class="flow-text">Detects the change via Runway, meeting intel, or department drop-in. <strong>Translates the impact</strong> for downstream teams: "A&R pulled track 3 → this affects Commercial's playlist pitch and Creative's content plan."</div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Impact Flag</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text"><strong>Adjusts campaign timing, content plan, or messaging.</strong> Gets ahead of the change instead of reacting to it after the single drops and the wrong version is promoted.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">07</div>
+      <div class="moment-title-block"><div class="moment-title">Performance Signal</div><div class="moment-trigger">Trigger: Notable streaming, social, or engagement shift</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Surfaces</div><div class="flow-text">Surfaces data from Artist Insights, Runway, or RDX. <strong>Contextualizes the signal</strong> — "this is unusual for this artist's tier" vs. "this is expected trajectory." Not raw numbers — translated meaning.</div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Data + Context</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text"><strong>Adjusts promotional strategy</strong> — spend, content approach, DSP pitch angle. Makes decisions based on contextualized data, not gut feeling or raw spreadsheets.</div></div>
+    </div></div>
+  </div>
+
+  <div class="moment urgent" data-moment>
+    <div class="moment-header" onclick="toggle(this)">
+      <div class="moment-number">08</div>
+      <div class="moment-title-block"><div class="moment-title">Phase Transition</div><div class="moment-trigger">Trigger: Artist moves between Campaign Phases (e.g., Rolling Singles → Project Rollout)</div></div>
+      <div class="moment-toggle">+</div>
+    </div>
+    <div class="moment-body"><div class="flow">
+      <div class="flow-col"><div class="flow-role ops">Campaign Ops</div><div class="flow-verb">Flags</div><div class="flow-verb">Prompts</div><div class="flow-text">Identifies the phase transition based on observable signals (project announced, street date passed, cycle complete). Updates system status. <strong>Prompts all departments that their deliverables shift.</strong></div></div>
+      <div class="flow-col center"><div class="handoff-arrow">↓</div><div class="handoff-artifact"><div class="handoff-artifact-name">Phase Change Notice</div></div><div class="handoff-arrow">↓</div></div>
+      <div class="flow-col"><div class="flow-role leads">Campaign Leads</div><div class="flow-text"><strong>Shifts mode</strong> — from single-support to full project campaign, or from active promo to sustain. Knows what every other department is shifting to at the same time.</div></div>
+    </div></div>
+  </div>
+
+</div>
+
+<div class="boundaries">
+  <div class="boundaries-title">Clear Boundaries</div>
+  <div class="boundaries-grid">
+    <div class="boundary-card">
+      <div class="boundary-card-label ops">Campaign Ops Does Not</div>
+      <div class="boundary-item">Make marketing decisions or set campaign strategy</div>
+      <div class="boundary-item">Approve creative direction or content</div>
+      <div class="boundary-item">Pitch DSPs or manage streaming relationships</div>
+      <div class="boundary-item">Manage social accounts or content calendars</div>
+      <div class="boundary-item">Replace any department's judgment — translates information so that judgment is better informed</div>
+    </div>
+    <div class="boundary-card">
+      <div class="boundary-card-label leads">Campaign Leads Does Not</div>
+      <div class="boundary-item">Track cross-department status or chase other teams for updates</div>
+      <div class="boundary-item">Build or maintain the meeting architecture</div>
+      <div class="boundary-item">Monitor Release Runway workability or flag upstream blockers</div>
+      <div class="boundary-item">Distribute information to departments outside of marketing</div>
+      <div class="boundary-item">Translate decisions from other rooms into department-specific action items</div>
+    </div>
+  </div>
+</div>
+
+<div class="the-point">
+  <div class="the-point-label">The Through-Line</div>
+  <p><strong>Campaign Ops owns the handoff, not the work.</strong> At every one of these eight moments, a specific artifact crosses the line — a briefing, a flag, a set of notes, a data summary. Campaign Leads is always one of the recipients, often the biggest. But the same information flows to every department that needs it. <em>Nobody works in the dark.</em></p>
+</div>
+
+<div class="footer">
+  <p>Meg Hourihan · Campaign Operations · RCA Records</p>
+  <p>Working Draft · March 2026</p>
+</div>
+
+</div>
+<script>
+function toggle(h){h.closest('[data-moment]').classList.toggle('open')}
+function toggleAll(){const m=document.querySelectorAll('[data-moment]'),b=document.querySelector('.expand-btn'),a=[...m].every(x=>x.classList.contains('open'));m.forEach(x=>{a?x.classList.remove('open'):x.classList.add('open')});b.textContent=a?'Expand All':'Collapse All'}
+</script>
+</body>
+</html>
