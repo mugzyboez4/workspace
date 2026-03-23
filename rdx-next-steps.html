@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDX — What I Found, What I Need</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F0E0E;
+    --card: #1A1A1A;
+    --off-white: #FCFDF8;
+    --chartreuse: #CDF851;
+    --flame: #FF4A23;
+    --slate: #3E3F41;
+    --fog: #B0A9BE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 680px; margin: 0 auto; padding: 40px 32px; }
+
+  /* HEADER */
+  .header {
+    border-bottom: 3px solid var(--chartreuse);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--fog);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.6;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--chartreuse);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+    margin-bottom: 10px;
+  }
+
+  .section p {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+  .section strong { color: var(--off-white); font-weight: 600; }
+
+  /* WORKS TABLE */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+
+  .mini-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fog);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--slate);
+  }
+
+  .mini-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #1A1A1A;
+    color: var(--fog);
+  }
+
+  .mini-table td:first-child {
+    color: var(--off-white);
+    font-weight: 600;
+  }
+
+  .pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    font-weight: 600;
+  }
+
+  .pill.yes { background: rgba(205,248,81,0.15); color: var(--chartreuse); }
+  .pill.blocked { background: rgba(255,74,35,0.15); color: var(--flame); }
+
+  /* STAT CALLOUT */
+  .callout {
+    background: var(--card);
+    border-left: 4px solid var(--flame);
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .callout p {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+  }
+
+  .callout strong { color: var(--off-white); }
+
+  .callout .stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--flame);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  /* ASK SECTION */
+  .ask {
+    background: var(--card);
+    border-left: 4px solid var(--chartreuse);
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .ask-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--chartreuse);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .ask-item {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .ask-item:last-child { margin-bottom: 0; }
+
+  .ask-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--chartreuse);
+  }
+
+  .ask-item strong { color: var(--off-white); }
+
+  .ask-item .who {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--chartreuse);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* UNLOCKS */
+  .unlock-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .unlock-card {
+    background: var(--card);
+    padding: 14px 16px;
+  }
+
+  .unlock-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--off-white);
+    margin-bottom: 4px;
+  }
+
+  .unlock-desc {
+    font-size: 12px;
+    color: var(--fog);
+    line-height: 1.5;
+  }
+
+  /* CLOSER */
+  .closer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--slate);
+  }
+
+  .closer p {
+    font-size: 14px;
+    color: var(--fog);
+    line-height: 1.7;
+  }
+
+  .closer strong { color: var(--off-white); }
+  .closer em { color: var(--chartreuse); font-style: normal; font-weight: 600; }
+
+  /* FOOTER */
+  .footer {
+    padding-top: 20px;
+    border-top: 1px solid var(--slate);
+    margin-top: 28px;
+  }
+
+  .footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--slate);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 24px 20px; }
+    .unlock-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">For Jordan · Campaign Operations</div>
+  <h1>RDX: What I Found, What I Need</h1>
+  <p class="header-sub">I spent a day inside Sony's RDX platform. Here's the short version.</p>
+</div>
+
+<!-- 1. WHAT I FOUND -->
+<div class="section">
+  <div class="section-number">01</div>
+  <div class="section-title">What I Found</div>
+  <p>Sony has a GraphQL federation platform called <strong>RDX</strong> that connects every backend system across SME. Release data, workability scores, clearance records, DSP partner info, catalog metadata — it's all queryable from one place. It's live. It's accessible. <strong>Nobody at RCA is using it.</strong></p>
+</div>
+
+<!-- 2. WHAT WORKS TODAY -->
+<div class="section">
+  <div class="section-number">02</div>
+  <div class="section-title">What Works Right Now</div>
+  <p>I confirmed these in the staging environment — real queries, real schema:</p>
+  <table class="mini-table">
+    <thead>
+      <tr><th>Capability</th><th>What It Returns</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Release Workability</td><td>All 9 KPI scores, alert thresholds, per-release breakdown</td><td><span class="pill yes">Works</span></td></tr>
+      <tr><td>DSP Catalog (SCUBA)</td><td>Spotify/Apple/Deezer — ISRCs, popularity, genres, followers</td><td><span class="pill yes">Works</span></td></tr>
+      <tr><td>Partner Delivery</td><td>Per-DSP pitch dates, lead times, week-one forecasts</td><td><span class="pill yes">Schema ✓</span></td></tr>
+      <tr><td>Clearance Records</td><td>Sample clearance + master clearance by ISRC</td><td><span class="pill blocked">Needs Prod</span></td></tr>
+      <tr><td>RCA-Only Filter</td><td>Filter all queries to RCA releases only (label key E009)</td><td><span class="pill blocked">Needs Prod</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 3. WHY IT MATTERS -->
+<div class="section">
+  <div class="section-number">03</div>
+  <div class="section-title">Why This Matters</div>
+  <p>I pulled the workability export on Sunday. Across all 113 scheduled releases:</p>
+
+  <div class="callout">
+    <div class="stat">100%</div>
+    <p><strong>SAA is "Unknown" on every single release.</strong> SAMP is Unknown on every release. Agreements is "Required" on every release. DSN Received is blank on every release. Not most — all 113.</p>
+  </div>
+
+  <p>The data to fill these gaps likely <strong>already exists upstream</strong> in Sony's clearance and repertoire systems. RDX can reach it. Nobody at RCA is reading it. That's what Campaign Ops fixes.</p>
+</div>
+
+<!-- 4. WHAT I NEED -->
+<div class="section">
+  <div class="section-number">04</div>
+  <div class="section-title">What I Need from You</div>
+  <p>Two things. Neither requires budget or new headcount.</p>
+
+  <div class="ask">
+    <div class="ask-label">The Ask</div>
+    <div class="ask-item"><strong>Greenlight Brian Lynch to provision RDX production access</strong> via the Azure Functions proxy he's already building. Staging confirmed the queries work — production will have the actual data. I just need you as the named sponsor so IT moves on it. <span class="who">→ You + Brian Lynch</span></div>
+    <div class="ask-item"><strong>15 minutes on a call this week</strong> so I can walk you through the workability snapshot and the three queries I want to run first in production. I'll show you exactly what "Unknown" looks like today and what it could look like with RDX feeding it. <span class="who">→ You + Me</span></div>
+  </div>
+</div>
+
+<!-- 5. WHAT IT UNLOCKS -->
+<div class="section">
+  <div class="section-number">05</div>
+  <div class="section-title">What This Unlocks</div>
+
+  <div class="unlock-grid">
+    <div class="unlock-card">
+      <div class="unlock-title">Pre-meeting workability scan</div>
+      <div class="unlock-desc">Before Active Projects, surface every release that's At Risk — without anyone opening Runway.</div>
+    </div>
+    <div class="unlock-card">
+      <div class="unlock-title">Clearance gap detection</div>
+      <div class="unlock-desc">Compare clearance API data against Runway's "Unknown" fields. Flag when data exists upstream but nobody's surfaced it.</div>
+    </div>
+    <div class="unlock-card">
+      <div class="unlock-title">Artist Insights automation</div>
+      <div class="unlock-desc">Replace manual Spotify/Apple data pulls for Crawley's decks with a single query.</div>
+    </div>
+    <div class="unlock-card">
+      <div class="unlock-title">DSP delivery tracking</div>
+      <div class="unlock-desc">Per-partner lead times and pitch statuses derived from real data — not manually tracked.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSER -->
+<div class="closer">
+  <p><strong>We don't need to build the pipes. Sony already built them.</strong> We need someone to read the water and translate it into action. That's Campaign Ops. The queries are written, the schema is confirmed, the proof point is sitting in the export. I just need production access to make it real.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Meg Hourihan · Campaign Operations · RCA Records · March 2026</p>
+</div>
+
+</div>
+</body>
+</html>
