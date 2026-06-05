@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do — June 4, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F0E0E; --card:#1A1A1A; --card-hover:#222; --line:#2A2A2A;
+    --text:#FCFDF8; --chartreuse:#CDF851; --flame:#FF4A23; --slate:#3E3F41; --fog:#B0A9BE;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .page{max-width:880px;margin:0 auto;padding:48px 32px 80px;}
+
+  .back{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fog);text-decoration:none;margin-bottom:28px;}
+  .back:hover{color:var(--chartreuse);}
+
+  .header{margin-bottom:36px;padding-bottom:22px;border-bottom:3px solid var(--chartreuse);}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--chartreuse);margin-bottom:10px;}
+  h1{font-size:clamp(34px,6vw,52px);font-weight:900;letter-spacing:-.01em;text-transform:uppercase;line-height:1;}
+  .sub{font-size:14px;color:var(--fog);margin-top:12px;max-width:560px;}
+
+  .section{margin-top:40px;}
+  .section-title{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text);margin-bottom:4px;}
+  .section-note{font-size:12px;color:var(--fog);margin-bottom:18px;}
+
+  /* task rows */
+  .task{display:grid;grid-template-columns:22px 1fr;gap:14px;background:var(--card);border-left:3px solid var(--slate);
+        padding:16px 18px;margin-bottom:10px;border-radius:2px;transition:background .15s;}
+  .task:hover{background:var(--card-hover);}
+  .task.big{border-left-color:var(--chartreuse);}
+  .box{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:2px solid var(--slate);border-radius:4px;
+       cursor:pointer;position:relative;margin-top:1px;flex-shrink:0;background:transparent;}
+  .task.big .box{border-color:var(--chartreuse);}
+  .box:checked{background:var(--chartreuse);border-color:var(--chartreuse);}
+  .box:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #0F0E0E;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  .t-title{font-size:15px;font-weight:600;}
+  .task.big .t-title{font-weight:800;}
+  .t-desc{font-size:13px;color:var(--fog);margin-top:5px;}
+  .t-meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--chartreuse);margin-top:8px;}
+  .done .t-title,.done .t-desc{text-decoration:line-through;color:var(--slate);}
+  .done .t-meta{color:var(--slate);}
+  .src{color:var(--slate);font-weight:500;}
+
+  /* meetings inline */
+  .mtg{background:var(--card);border-left:3px solid var(--fog);padding:13px 18px;margin-bottom:8px;border-radius:2px;display:grid;grid-template-columns:22px 1fr;gap:14px;}
+  .mtg .box{border-color:var(--fog);}
+  .mtg .box:checked{background:var(--fog);border-color:var(--fog);}
+  .mtg .t-title{font-size:14px;font-weight:600;}
+
+  /* flags */
+  .flags{margin-top:44px;background:#161311;border:1px solid var(--flame);border-radius:4px;padding:24px 26px;}
+  .flags .section-title{color:var(--flame);}
+  .flag{padding:14px 0;border-bottom:1px solid rgba(255,74,35,.18);}
+  .flag:last-child{border-bottom:none;padding-bottom:0;}
+  .flag-h{font-size:14px;font-weight:800;}
+  .flag-b{font-size:13px;color:var(--fog);margin-top:5px;}
+
+  .triad{margin-top:44px;background:var(--card);border:2px solid var(--chartreuse);border-radius:4px;padding:24px 26px;}
+  .triad-h{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--chartreuse);margin-bottom:12px;}
+  .triad ol{margin-left:18px;}
+  .triad li{font-size:15px;font-weight:600;margin-bottom:7px;}
+  .triad li span{font-weight:400;color:var(--fog);font-size:13px;}
+
+  .foot{margin-top:40px;font-size:11px;color:var(--slate);}
+  .reset{background:none;border:1px solid var(--slate);color:var(--fog);font-family:inherit;font-size:11px;font-weight:600;
+          letter-spacing:.06em;text-transform:uppercase;padding:7px 14px;border-radius:3px;cursor:pointer;margin-top:18px;}
+  .reset:hover{border-color:var(--flame);color:var(--flame);}
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="index.html">← Workspace</a>
+
+  <div class="header">
+    <div class="eyebrow">Just for me · parsed from the 6/4 log</div>
+    <h1>To-Do — June 4</h1>
+    <p class="sub">Seven conversations, one full day. The through-line: nobody can see <em>what happens when</em> in a release, so everyone waits until the day-before to ask. That's the map.</p>
+  </div>
+
+  <!-- BIG 3 -->
+  <div class="section">
+    <div class="section-title">The Big Rocks</div>
+    <div class="section-note">The four that actually move Campaign Ops. The map is the one to own ruthlessly.</div>
+
+    <label class="task big">
+      <input type="checkbox" class="box">
+      <div>
+        <div class="t-title">The "what happens when" map / release-stage view</div>
+        <div class="t-desc">Came up 4 ways today — overdue from the label meeting, pre-release windows w/ Alexis, the gantt idea, the scheduling chicken-and-egg G flagged. Build the lifecycle view (PREP → PLAN → PRE-RELEASE → RELEASE → POST) showing where a project sits + what's due. Who-to-ask + when, never who's-on-the-hook.</div>
+        <div class="t-meta">You · this week <span class="src">· conv 1, 5, 7</span></div>
+      </div>
+    </label>
+
+    <label class="task big">
+      <input type="checkbox" class="box">
+      <div>
+        <div class="t-title">Scheduling request redesign</div>
+        <div class="t-desc">Fix the Airtable form + fields (artist / title / release date as datetime / genre / config / product type / pre-order / teaser + video config). Surface the hard limit you already named: Airtable can't do bundles/pre-orders/IGs cleanly — don't force it.</div>
+        <div class="t-meta">You + T · working session next week <span class="src">· conv 2, 3</span></div>
+      </div>
+    </label>
+
+    <label class="task big">
+      <input type="checkbox" class="box">
+      <div>
+        <div class="t-title">Consolidate partner/creator trackers</div>
+        <div class="t-desc">Nikki's "make another tracker" reflex is the problem; fix = one base, views per partner (Allie tag-teams), plus the creator DB you're handing Alexis. Same move: brands-team survey → one standardized artist-intake questionnaire across departments.</div>
+        <div class="t-meta">You · Allie to tag-team <span class="src">· conv 3, 5</span></div>
+      </div>
+    </label>
+
+    <label class="task big">
+      <input type="checkbox" class="box">
+      <div>
+        <div class="t-title">Retrieve the Crawley "X → Y" trigger framework for Alexis</div>
+        <div class="t-desc">The metric-threshold doc where hitting a number unlocks spend (breakout/lift). You said you'd find it and send it. It's the budget-guardrail logic, already half-built in your files.</div>
+        <div class="t-meta">You · send to Alexis <span class="src">· conv 5</span></div>
+      </div>
+    </label>
+  </div>
+
+  <!-- QUICK -->
+  <div class="section">
+    <div class="section-title">Quick To-Dos</div>
+    <div class="section-note">Owner / timing noted.</div>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Port list for the PDE/Airtable demo</div>
+      <div class="t-desc">"Active stuff worth bringing over" + need-to-have vs nice-to-have. Mike's sending the scope doc.</div>
+      <div class="t-meta">You · before June 15 <span class="src">· conv 2</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Keep pushing Claude-↔-Airtable approval + internal hosting</div>
+      <div class="t-desc">Mike's working it. Your infrastructure unlock for live dashboards.</div>
+      <div class="t-meta">Track <span class="src">· conv 2</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Advance Leo's creative-ticket automation</div>
+      <div class="t-desc">Auto-fire tickets to creative when a release is scheduled, so routing stops landing on people manually.</div>
+      <div class="t-meta">Track w/ Leo <span class="src">· conv 5</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Prompt creative for "dream-scenario" lead times</div>
+      <div class="t-desc">Like Leo's 3-tier complexity breakout — feeds the map.</div>
+      <div class="t-meta">Prompt <span class="src">· conv 1</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Surface the D2C-only labeling gap</div>
+      <div class="t-desc">horsegiirL got called D2C-only in a meeting with no upstream flag. Ties straight to the RDX D2C blind spot.</div>
+      <div class="t-meta">Flag to Tarek / Angelina <span class="src">· conv 2</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Eris [VERIFY] contract renewal</div>
+      <div class="t-desc">Handle paperwork, loop in G, pin down what "make the most of the partnership" means. Chase Monday if your seat hasn't landed.</div>
+      <div class="t-meta">You <span class="src">· conv 6</span></div></div>
+    </label>
+
+    <label class="task">
+      <input type="checkbox" class="box">
+      <div><div class="t-title">Share creator database back-end to Alexis</div>
+      <div class="t-desc">So she can add columns (artists, size tier, quality/sensitivity tier).</div>
+      <div class="t-meta">You · quick <span class="src">· conv 5</span></div></div>
+    </label>
+  </div>
+
+  <!-- MEETINGS -->
+  <div class="section">
+    <div class="section-title">Meetings to Set</div>
+    <div class="section-note"></div>
+
+    <label class="mtg"><input type="checkbox" class="box"><div class="t-title">T — define what Campaign Ops actually owns on scheduling + the shared spreadsheet</div></label>
+    <label class="mtg"><input type="checkbox" class="box"><div class="t-title">Nikki + Jordan — physical process / release planning (Nikki asked)</div></label>
+    <label class="mtg"><input type="checkbox" class="box"><div class="t-title">Alexis ↔ Karen — film-industry learnings (on-set creators, NDAs, TV/film footage access)</div></label>
+    <label class="mtg"><input type="checkbox" class="box"><div class="t-title">Creative follow-up (Court/Alex/G) once Leo + Sandra's deliverable-timing breakout is back</div></label>
+  </div>
+
+  <!-- FLAGS -->
+  <div class="flags">
+    <div class="section-title">Flags — where today pulled you off compass</div>
+    <div class="flag"><div class="flag-h">You're becoming the scheduling catch-all.</div><div class="flag-b">You committed to do Red Clay Strays yourself, Scott's circling, Carlos thinks "ops does scheduling now," Allie flagged it's premature. Fixing the template is your lane. Filling out everyone's requests is the grinder, not the conditions-builder. Decide the boundary with T <em>out loud</em> before July, or it gets decided for you.</div></div>
+    <div class="flag"><div class="flag-h">Bespoke favors dressed as tooling.</div><div class="flag-b">T's email-drag grid, Nikki's mockup, Alexis's stuff — all good, but build one reusable system, not three one-offs per person.</div></div>
+    <div class="flag"><div class="flag-h">The consumer RCA newsletter / Salesforce is marketing's to fix.</div><div class="flag-b">Surface it to Tarek; don't adopt it.</div></div>
+    <div class="flag"><div class="flag-h">Christian / "keep a list of his mistakes."</div><div class="flag-b">Enablement reminders = fine. Documenting every team's knowledge gaps tips into surveillance — the exact who's-responsible map you're trying not to be. His performance is Allie/Tarek's to manage.</div></div>
+    <div class="flag"><div class="flag-h">Steve Lacy creative reconciliation — already declined. Good. Leave it declined.</div></div>
+    <div class="flag"><div class="flag-h">Soft one: most of today was emotional-support 1:1s for people who don't report to you.</div><div class="flag-b">Shani, Allie, Alexis. Real value — but unrewarded labor and a real time sink. Be deliberate about the dose.</div></div>
+  </div>
+
+  <!-- TRIAD -->
+  <div class="triad">
+    <div class="triad-h">If you only own three this week</div>
+    <ol>
+      <li>The map <span>— the through-line of the whole day</span></li>
+      <li>The scheduling <em>boundary</em> <span>— not the scheduling work</span></li>
+      <li>The trigger framework for Alexis <span>— find it, send it</span></li>
+    </ol>
+  </div>
+
+  <button class="reset" onclick="if(confirm('Clear all checkmarks?')){localStorage.removeItem(KEY);document.querySelectorAll('.box').forEach(b=>b.checked=false);document.querySelectorAll('.task,.mtg').forEach(t=>t.classList.remove('done'));}">Reset checkboxes</button>
+  <div class="foot">Parsed from 6/4/26 conversation log · private to meg.mugzyboez.co · checkmarks save to this browser only</div>
+</div>
+
+<script>
+  const KEY='todo-2026-06-04';
+  const boxes=[...document.querySelectorAll('.box')];
+  const saved=JSON.parse(localStorage.getItem(KEY)||'[]');
+  boxes.forEach((b,i)=>{
+    if(saved[i]){b.checked=true;b.closest('.task,.mtg').classList.add('done');}
+    b.addEventListener('change',()=>{
+      b.closest('.task,.mtg').classList.toggle('done',b.checked);
+      localStorage.setItem(KEY,JSON.stringify(boxes.map(x=>x.checked)));
+    });
+  });
+</script>
+</body>
+</html>
